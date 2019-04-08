@@ -1,0 +1,17 @@
+@mixin sidenav-hover-colors($theme) {
+  $accent: map-get($theme, accent);
+
+  .mat-list-option:hover,
+  .mat-list-option:focus,
+  .mat-nav-list .mat-list-item:hover,
+  .mat-nav-list .mat-list-item:focus,
+  .mat-action-list .mat-list-item:hover,
+  .mat-action-list .mat-list-item:focus {
+    background: mat-color($accent);
+    color: #000;
+  }
+}
+
+.mat-list-item span {
+  padding-left: 10px;
+}
