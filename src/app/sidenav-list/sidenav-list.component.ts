@@ -7,6 +7,11 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 })
 export class SidenavListComponent implements OnInit {
 
+  public guestTabs = [
+    {text: 'Login', icon: 'input', path: 'login'},
+    {text: 'Help', icon: 'help', path: 'help'}
+  ];
+
   @Output()
   private clickLinkEventEmitter = new EventEmitter();
 

@@ -1,3 +1,40 @@
-<p>
-  authentication works!
-</p>
+<div class="form-container">
+  <h2 class="mat-title">Login</h2>
+  <h3 class="mat-subheading-2">Go to the personal workspace</h3>
+  <form *ngIf="userInfo == null" (ngSubmit)="checkUsernameExists(username.value)">
+    <mat-form-field>
+      <input matInput placeholder="Username" #username required [formControl]="usernameFormControl">
+      <mat-error *ngIf="usernameFormControl.invalid">Enter username</mat-error>
+    </mat-form-field>
+    <button type="submit" class="login-button" mat-flat-button color="accent">
+      Next
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </form>
+  <form *ngIf="userInfo != null">
+    <div class="user-info-container">
+      <span class="mat-body-strong">Logging in as</span>
+      <div class="user-info">
+        <div class="thumbnail">
+          <img class="portrait" [src]="userInfo.photoUrl" alt="User photo">
+        </div>
+        <h5 class="mat-body"><i>{{userInfo.username}}</i></h5>
+      </div>
+    </div>
+    <mat-form-field>
+      <input matInput placeholder="Password" #password [type]="hidePassword ? 'password' : 'text'">
+      <mat-icon matSuffix
+                (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </mat-form-field>
+    <button class="login-button" mat-flat-button color="accent"
+            (click)="getAccessToken(userInfo.username, password.value)">
+      Log in
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <button class="back-button" mat-flat-button color="accent"
+            (click)="removeCurrentUserInfo()">
+      <mat-icon>arrow_back</mat-icon>
+      Back
+    </button>
+  </form>
+</div>

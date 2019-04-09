@@ -8,6 +8,7 @@ import {MaterialModule} from './material.module';
 import {AuthenticationModule} from './authentication/authentication.module';
 import {HeaderComponent} from './header/header.component';
 import {SidenavListComponent} from './sidenav-list/sidenav-list.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {SidenavListComponent} from './sidenav-list/sidenav-list.component';
     AppRoutingModule,
     MaterialModule,
     AuthenticationModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

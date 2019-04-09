@@ -6,20 +6,20 @@
 
 $light-primary: mat-palette($light-palette-primary, 400, 200, 700);
 $light-accent: mat-palette($light-palette-accent, 500, 300, 600);
-$light-warn: mat-palette($light-palette-primary, 400, 200, 700);
+$light-warn: mat-palette($mat-red);
 
 $dark-primary: mat-palette($light-palette-primary, 800, 500, 900);
 $dark-accent: mat-palette($light-palette-accent, 800, 500, 900);
-$dark-warn: mat-palette($light-palette-primary, 800, 500, 900);
+$dark-warn: mat-palette($mat-red);
 
 $app-light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
 $app-dark-theme: mat-light-theme($dark-primary, $dark-accent, $dark-warn);
 
-@include angular-material-theme($app-light-theme);
+@include angular-material-theme($app-dark-theme);
 
 @import "~src/app/sidenav-list/sidenav-list.component";
 
-@include sidenav-hover-colors($app-light-theme);
+@include sidenav-hover-colors($app-dark-theme);
 
 // defaults
 
