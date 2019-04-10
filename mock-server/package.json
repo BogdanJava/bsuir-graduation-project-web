@@ -1,0 +1,13 @@
+{
+  "name": "mock-server",
+  "description": "simple mock server",
+  "author": {
+    "name": "bahdan.shyshkin",
+    "email": "bogdanshishkin1998@gmail.com"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4"
+  }
+}

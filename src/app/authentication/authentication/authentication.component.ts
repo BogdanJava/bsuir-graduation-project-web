@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../user.service';
 import {UserPublicInfo} from '../../model/UserPublicInfo';
 import {FormControl, Validators} from '@angular/forms';
+import {error} from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-authentication',
@@ -12,9 +13,11 @@ export class AuthenticationComponent implements OnInit {
   public hidePassword = true;
 
   public usernameFormControl = new FormControl('', [Validators.required]);
+  public passwordFormControl = new FormControl('', [Validators.required]);
   public username: string;
   public password: string;
   public userInfo: UserPublicInfo;
+  public errorMessage: string;
 
   constructor(private userService: UserService) {
   }
@@ -23,17 +26,42 @@ export class AuthenticationComponent implements OnInit {
   }
 
   checkUsernameExists(username: string) {
-    if (!this.usernameFormControl.errors) {
+    if (this.basicControlValidation(this.usernameFormControl, 'Username')) {
       this.userService.getUserPublicInfo(username).subscribe(userInfo => {
         this.userInfo = userInfo;
-      }, console.error);
+      }, err => {
+        if (err.status === 404) {
+          this.usernameFormControl.setErrors({
+            invalid: true,
+          });
+          this.errorMessage = err.error.message;
+        }
+      });
     }
   }
 
   getAccessToken(username: string, password: string) {
-    this.userService.getAccessToken(username, password).subscribe(token => {
-      this.userService.setAccessToken(token);
-    });
+    if (this.basicControlValidation(this.passwordFormControl, 'Password')) {
+      this.userService.getAccessToken(username, password).subscribe(token => {
+        UserService.setAccessToken(token);
+      }, err => {
+        if (err.status === 401) {
+          this.passwordFormControl.setErrors({
+            invalid: true,
+          });
+          this.errorMessage = err.error.message;
+        }
+      });
+    }
+  }
+
+  basicControlValidation(formControl: FormControl, formControlName: string) {
+    if (formControl.errors) {
+      if (formControl.getError('required')) {
+        this.errorMessage = `${formControlName} must not be empty`;
+      }
+    }
+    return formControl.errors == null;
   }
 
   removeCurrentUserInfo() {

@@ -13,15 +13,16 @@ export class UserService {
   constructor(private httpClient: HttpClient) {
   }
 
+  public static setAccessToken(token: AccessToken) {
+    localStorage.setItem('access_token', token.token);
+    localStorage.setItem('expires_at', token.expiresAt.toString());
+  }
+
   public getUserPublicInfo(username: string): Observable<UserPublicInfo> {
     return this.httpClient.get<UserPublicInfo>(`${API_URL}/public/users?username=${username}`);
   }
 
   public getAccessToken(username: string, password: string): Observable<AccessToken> {
     return this.httpClient.post<AccessToken>(`${API_URL}/auth/token`, {username, password});
-  }
-
-  public setAccessToken(token: AccessToken) {
-
   }
 }

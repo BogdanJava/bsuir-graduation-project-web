@@ -1,3 +1,0 @@
-{
-  "/api/public/users?username=:username": "/public-users?username=:username"
-}
