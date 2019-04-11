@@ -1,5 +1,5 @@
 export class AccessToken {
-  constructor(public token: string,
+  constructor(public accessToken: string,
               public expiresAt: number) {
   }
 }

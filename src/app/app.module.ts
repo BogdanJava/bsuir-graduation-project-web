@@ -9,12 +9,15 @@ import {AuthenticationModule} from './authentication/authentication.module';
 import {HeaderComponent} from './header/header.component';
 import {SidenavListComponent} from './sidenav-list/sidenav-list.component';
 import {HttpClientModule} from '@angular/common/http';
+import { HomeComponent } from './home/home.component';
+import {MatMenuModule} from '@angular/material';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    SidenavListComponent
+    SidenavListComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +25,8 @@ import {HttpClientModule} from '@angular/common/http';
     MaterialModule,
     AuthenticationModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

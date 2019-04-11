@@ -1,5 +1,13 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button (click)="toggleSidenav()">
-    <mat-icon>menu</mat-icon>
-  </button>
+  <mat-toolbar-row>
+    <button mat-icon-button (click)="toggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <button>
+
+    </button>
+    <mat-menu #userCommonActions="matMenu">
+
+    </mat-menu>
+  </mat-toolbar-row>
 </mat-toolbar>

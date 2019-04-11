@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../user.service';
-import {UserPublicInfo} from '../../model/UserPublicInfo';
+import {UserPublicInfo} from '../../model/User';
 import {FormControl, Validators} from '@angular/forms';
-import {error} from '@angular/compiler/src/util';
+import {AuthenticationService} from '../../authentication.service';
+import {Router} from '@angular/router';
+import {NotificationsService} from '../../notifications.service';
 
 @Component({
   selector: 'app-authentication',
@@ -19,7 +21,10 @@ export class AuthenticationComponent implements OnInit {
   public userInfo: UserPublicInfo;
   public errorMessage: string;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+              private authService: AuthenticationService,
+              private router: Router,
+              private notifications: NotificationsService) {
   }
 
   ngOnInit() {
@@ -42,8 +47,12 @@ export class AuthenticationComponent implements OnInit {
 
   getAccessToken(username: string, password: string) {
     if (this.basicControlValidation(this.passwordFormControl, 'Password')) {
-      this.userService.getAccessToken(username, password).subscribe(token => {
-        UserService.setAccessToken(token);
+      this.authService.getAccessToken(username, password).subscribe(token => {
+        AuthenticationService.setAccessToken(token);
+        if (token && token.accessToken) {
+          this.notifications.pushNotification('Authenticated');
+          this.router.navigateByUrl('/home');
+        }
       }, err => {
         if (err.status === 401) {
           this.passwordFormControl.setErrors({

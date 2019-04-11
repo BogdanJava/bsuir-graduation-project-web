@@ -1,4 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {User} from '../model/User';
+import {UserService} from '../user.service';
 
 @Component({
   selector: 'app-header',
@@ -10,14 +12,14 @@ export class HeaderComponent implements OnInit {
   @Output()
   private clickMenuButtonEventEmitter = new EventEmitter();
 
-  constructor() {
+  constructor(private userService: UserService) {
   }
 
   ngOnInit() {
+
   }
 
   toggleSidenav() {
-    console.log('toggle');
     this.clickMenuButtonEventEmitter.emit();
   }
 }
