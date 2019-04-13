@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
+  MatBadgeModule,
   MatButtonModule,
   MatCardModule,
   MatFormFieldModule,
@@ -23,7 +24,8 @@ import {
     MatCardModule,
     MatFormFieldModule,
     MatProgressSpinnerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatBadgeModule
   ],
   exports: [
     MatSidenavModule,
@@ -34,7 +36,8 @@ import {
     MatCardModule,
     MatFormFieldModule,
     MatProgressSpinnerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatBadgeModule
   ]
 })
 export class MaterialModule {

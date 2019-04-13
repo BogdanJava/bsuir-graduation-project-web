@@ -1,13 +1,35 @@
 <mat-toolbar color="primary">
-  <mat-toolbar-row>
+  <mat-toolbar-row style="justify-content: space-between">
     <button mat-icon-button (click)="toggleSidenav()">
       <mat-icon>menu</mat-icon>
     </button>
-    <button>
-
-    </button>
-    <mat-menu #userCommonActions="matMenu">
-
-    </mat-menu>
+    <div class="menu-wrapper">
+      <section id="messages" *ngIf="unreadMessagesCount != null">
+        <button mat-icon-button>
+          <mat-icon [matBadge]="unreadMessagesCount === 0 ? null : unreadMessagesCount.toString()" matBadgeColor="warn">mail_outline</mat-icon>
+        </button>
+      </section>
+      <section id="tasks" *ngIf="pendingTasksCount != null">
+        <button mat-icon-button>
+          <mat-icon [matBadge]="pendingTasksCount === 0 ? null : pendingTasksCount.toString()" matBadgeColor="warn">work_outline</mat-icon>
+        </button>
+      </section>
+      <section id="menu-button" *ngIf="user">
+        <button mat-button [mat-menu-trigger-for]="userCommonActions" #menuButton>
+        <span class="user-info">
+          <span class="username">{{user.username}}</span>
+          <span class="thumbnail">
+            <img class="portrait" [src]="user.photoUrl" alt="user photo">
+          </span>
+          <mat-icon>expand_more</mat-icon>
+        </span>
+        </button>
+        <mat-menu #userCommonActions="matMenu">
+          <a mat-menu-item>Profile</a>
+          <a mat-menu-item>Workspace</a>
+          <a mat-menu-item>Logout</a>
+        </mat-menu>
+      </section>
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>

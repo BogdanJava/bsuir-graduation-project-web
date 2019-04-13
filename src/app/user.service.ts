@@ -17,6 +17,14 @@ export class UserService {
   }
 
   public getUser(username: string): Observable<User> {
-    return this.httpClient.get<User>(`${API_URL}/users`);
+    return this.httpClient.get<User>(`${API_URL}/users?username=${username}`);
+  }
+
+  public getUnreadMessagesCount(username: string): Observable<number> {
+    return this.httpClient.get<number>(`${API_URL}/messages/count?username=${username}&read=0`);
+  }
+
+  public getPendingTasksCount(username: string): Observable<number> {
+    return this.httpClient.get<number>(`${API_URL}/tasks/count?username=${username}&pending=1`);
   }
 }

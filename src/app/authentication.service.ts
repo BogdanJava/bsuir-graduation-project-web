@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {API_URL} from './constants';
 import {Router} from '@angular/router';
+import * as jwtDecode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,14 @@ export class AuthenticationService {
 
   public getAccessToken(username: string, password: string): Observable<AccessToken> {
     return this.httpClient.post<AccessToken>(`${API_URL}/auth/token`, {username, password});
+  }
+
+  public getUsernameFromToken(token: string): string {
+    try {
+      return jwtDecode(token).sub;
+    } catch (e) {
+      return null;
+    }
   }
 
   public logout(onLogout?, onError?): void {
