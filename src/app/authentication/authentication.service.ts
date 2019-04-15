@@ -1,15 +1,18 @@
 import {Injectable} from '@angular/core';
-import {AccessToken} from './model/AccessToken';
-import {Observable} from 'rxjs';
+import {AccessToken} from '../model/AccessToken';
+import {Observable, Subject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {API_URL} from './constants';
+import {API_URL} from '../constants';
 import {Router} from '@angular/router';
 import * as jwtDecode from 'jwt-decode';
+import {User} from '../model/User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
+  private state = new Subject<User>();
+  public userState = this.state.asObservable();
 
   constructor(private httpClient: HttpClient,
               private router: Router) {
@@ -18,6 +21,14 @@ export class AuthenticationService {
   public static setAccessToken(token: AccessToken): void {
     localStorage.setItem('access_token', token.accessToken);
     localStorage.setItem('expires_at', token.expiresAt.toString());
+  }
+
+  public static getInfoFromToken(token: string, tokenField: string): string {
+    try {
+      return jwtDecode(token)[tokenField];
+    } catch (e) {
+      return null;
+    }
   }
 
   public static isTokenExpired(): boolean {
@@ -31,21 +42,18 @@ export class AuthenticationService {
     }
   }
 
-  public getAccessToken(username: string, password: string): Observable<AccessToken> {
-    return this.httpClient.post<AccessToken>(`${API_URL}/auth/token`, {username, password});
+  public setUser(user: User) {
+    this.state.next(user);
   }
 
-  public getUsernameFromToken(token: string): string {
-    try {
-      return jwtDecode(token).sub;
-    } catch (e) {
-      return null;
-    }
+  public getAccessToken(username: string, password: string): Observable<AccessToken> {
+    return this.httpClient.post<AccessToken>(`${API_URL}/auth/token`, {username, password});
   }
 
   public logout(onLogout?, onError?): void {
     localStorage.removeItem('access_token');
     localStorage.removeItem('expires_at');
+    this.setUser(null);
     this.router.navigateByUrl('/login').then(result => {
       if (result) {
         if (onLogout) {

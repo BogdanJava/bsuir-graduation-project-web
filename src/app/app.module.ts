@@ -11,13 +11,16 @@ import {SidenavListComponent} from './sidenav-list/sidenav-list.component';
 import {HttpClientModule} from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import {MatMenuModule} from '@angular/material';
+import { ProfileComponent } from './profile/profile.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     SidenavListComponent,
-    HomeComponent
+    HomeComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,8 @@ import {MatMenuModule} from '@angular/material';
     AuthenticationModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MatMenuModule
+    MatMenuModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

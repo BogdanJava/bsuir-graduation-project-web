@@ -38,3 +38,17 @@
 .menu-wrapper section {
   margin-right: 10px;
 }
+
+.menu-tab-item-text {
+  margin-right: 15px;
+}
+
+.menu-tab-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu-tab-item mat-icon {
+  margin-right: 0;
+}

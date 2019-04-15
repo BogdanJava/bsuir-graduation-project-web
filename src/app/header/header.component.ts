@@ -1,7 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {User} from '../model/User';
 import {UserService} from '../user.service';
-import {AuthenticationService} from '../authentication.service';
+import {AuthenticationService} from '../authentication/authentication.service';
+import {TabItem} from '../model/TabItem';
+import {NotificationsService} from '../notifications.service';
 
 @Component({
   selector: 'app-header',
@@ -9,22 +11,47 @@ import {AuthenticationService} from '../authentication.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
+  public user: User;
+  public unreadMessagesCount: number = null;
+  public pendingTasksCount: number = null;
+  public tabs: TabItem[] = [
+    {text: 'Profile', path: 'profile', icon: 'account_circle', action: () => {}},
+    {
+      text: 'Logout', path: '', icon: 'exit_to_app', action: () => {
+        this.authService.logout(() => {
+          this.notifications.pushNotification('Logged out');
+        });
+      }
+    }
+  ];
   @Output()
   private clickMenuButtonEventEmitter = new EventEmitter();
-  private user: User;
-  private unreadMessagesCount: number = null;
-  private pendingTasksCount: number = null;
 
   constructor(private userService: UserService,
-              private authService: AuthenticationService) {
+              private authService: AuthenticationService,
+              private notifications: NotificationsService) {
   }
 
   ngOnInit() {
-    const username = this.authService.getUsernameFromToken(localStorage.getItem('access_token'));
+    this.fetchUser();
+    this.authService.userState.subscribe(user => {
+      if (user) {
+        this.fetchUser();
+      } else {
+        this.unsetAll();
+      }
+    });
+  }
+
+  toggleSidenav() {
+    this.clickMenuButtonEventEmitter.emit();
+  }
+
+  private fetchUser(): void {
+    const username = UserService.getCurrentUsername();
     if (username) {
-      this.userService.getUser(username).subscribe(user => {
-        this.user = user;
+      this.userService.getUser(username).subscribe(userDocument => {
+        this.user = userDocument;
       });
       this.userService.getUnreadMessagesCount(username).subscribe(count => {
         this.unreadMessagesCount = count;
@@ -32,10 +59,14 @@ export class HeaderComponent implements OnInit {
       this.userService.getPendingTasksCount(username).subscribe(count => {
         this.pendingTasksCount = count;
       });
+    } else {
+      this.unsetAll();
     }
   }
 
-  toggleSidenav() {
-    this.clickMenuButtonEventEmitter.emit();
+  private unsetAll() {
+    this.user = null;
+    this.unreadMessagesCount = null;
+    this.pendingTasksCount = null;
   }
 }

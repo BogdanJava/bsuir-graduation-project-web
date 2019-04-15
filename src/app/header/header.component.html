@@ -6,12 +6,16 @@
     <div class="menu-wrapper">
       <section id="messages" *ngIf="unreadMessagesCount != null">
         <button mat-icon-button>
-          <mat-icon [matBadge]="unreadMessagesCount === 0 ? null : unreadMessagesCount.toString()" matBadgeColor="warn">mail_outline</mat-icon>
+          <mat-icon [matBadge]="unreadMessagesCount === 0 ? null : unreadMessagesCount.toString()" matBadgeColor="warn">
+            mail_outline
+          </mat-icon>
         </button>
       </section>
       <section id="tasks" *ngIf="pendingTasksCount != null">
         <button mat-icon-button>
-          <mat-icon [matBadge]="pendingTasksCount === 0 ? null : pendingTasksCount.toString()" matBadgeColor="warn">work_outline</mat-icon>
+          <mat-icon [matBadge]="pendingTasksCount === 0 ? null : pendingTasksCount.toString()" matBadgeColor="warn">
+            work_outline
+          </mat-icon>
         </button>
       </section>
       <section id="menu-button" *ngIf="user">
@@ -25,9 +29,12 @@
         </span>
         </button>
         <mat-menu #userCommonActions="matMenu">
-          <a mat-menu-item>Profile</a>
-          <a mat-menu-item>Workspace</a>
-          <a mat-menu-item>Logout</a>
+          <a [routerLink]="tab.path" mat-menu-item
+             *ngFor="let tab of tabs" class="menu-tab-item"
+             (click)="tab.action()">
+            <span class="mat-body-strong menu-tab-item-text">{{tab.text}}</span>
+            <mat-icon>{{tab.icon}}</mat-icon>
+          </a>
         </mat-menu>
       </section>
     </div>

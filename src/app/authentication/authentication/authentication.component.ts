@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../user.service';
-import {UserPublicInfo} from '../../model/User';
+import {User, UserPublicInfo} from '../../model/User';
 import {FormControl, Validators} from '@angular/forms';
-import {AuthenticationService} from '../../authentication.service';
+import {AuthenticationService} from '../authentication.service';
 import {Router} from '@angular/router';
 import {NotificationsService} from '../../notifications.service';
 
@@ -50,6 +50,7 @@ export class AuthenticationComponent implements OnInit {
       this.authService.getAccessToken(username, password).subscribe(token => {
         AuthenticationService.setAccessToken(token);
         if (token && token.accessToken) {
+          this.authService.setUser(new User(null, username, null));
           this.notifications.pushNotification('Authenticated');
           this.router.navigateByUrl('/home');
         }

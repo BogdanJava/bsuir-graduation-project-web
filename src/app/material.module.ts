@@ -4,11 +4,14 @@ import {
   MatBadgeModule,
   MatButtonModule,
   MatCardModule,
+  MatDatepickerModule,
   MatFormFieldModule,
-  MatIconModule,
+  MatIconModule, MatInputModule,
   MatListModule,
+  MatNativeDateModule,
   MatProgressSpinnerModule,
-  MatSidenavModule, MatSnackBarModule,
+  MatSidenavModule,
+  MatSnackBarModule,
   MatToolbarModule
 } from '@angular/material';
 
@@ -25,7 +28,10 @@ import {
     MatFormFieldModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule
   ],
   exports: [
     MatSidenavModule,
@@ -37,7 +43,10 @@ import {
     MatFormFieldModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule
   ]
 })
 export class MaterialModule {

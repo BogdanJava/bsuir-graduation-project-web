@@ -1,5 +1,6 @@
 <mat-nav-list class="sidenav-list">
-  <a mat-list-item (click)="closeSidenav(tab.action)" *ngFor="let tab of tabList" [routerLink]="tab.path">
+  <a mat-list-item (click)="closeSidenav(tab.action)"
+     *ngFor="let tab of tabList" [routerLink]="tab.path">
     <mat-icon>{{tab.icon}}</mat-icon>
     <span class="mat-body-strong">{{tab.text}}</span>
   </a>
