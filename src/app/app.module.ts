@@ -12,7 +12,10 @@ import {HttpClientModule} from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import {MatMenuModule} from '@angular/material';
 import { ProfileComponent } from './profile/profile.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { ContactInfoComponent } from './profile/contact-info/contact-info.component';
+import { SecuritySettingsComponent } from './profile/security/security-settings.component';
+import { PasswordComponent } from './profile/security/password/password.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import {FormsModule} from '@angular/forms';
     HeaderComponent,
     SidenavListComponent,
     HomeComponent,
-    ProfileComponent
+    ProfileComponent,
+    ContactInfoComponent,
+    SecuritySettingsComponent,
+    PasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +36,8 @@ import {FormsModule} from '@angular/forms';
     BrowserAnimationsModule,
     HttpClientModule,
     MatMenuModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -4,7 +4,6 @@ import {AuthenticationComponent} from './authentication/authentication.component
 import {HelpComponent} from './help/help.component';
 import {MaterialModule} from '../material.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatFormFieldModule, MatInputModule} from '@angular/material';
 
 @NgModule({
   declarations: [AuthenticationComponent, HelpComponent],
@@ -12,8 +11,7 @@ import {MatFormFieldModule, MatInputModule} from '@angular/material';
     CommonModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule,
-    MatInputModule
+    ReactiveFormsModule
   ]
 })
 export class AuthenticationModule {

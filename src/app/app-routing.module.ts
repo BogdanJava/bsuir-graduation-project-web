@@ -5,12 +5,19 @@ import {HomeComponent} from './home/home.component';
 import {AuthGuard} from './authentication/auth.guard';
 import {AuthorizedGuard} from './authentication/authorized.guard';
 import {ProfileComponent} from './profile/profile.component';
+import {ContactInfoComponent} from './profile/contact-info/contact-info.component';
+import {SecuritySettingsComponent} from './profile/security/security-settings.component';
 
 const routes: Routes = [
   {redirectTo: '/login', pathMatch: 'full', path: ''},
   {path: 'login', component: AuthenticationComponent, canActivate: [AuthorizedGuard]},
   {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
-  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]}
+  {
+    path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], canActivateChild: [AuthGuard], children: [
+      {path: 'contact', component: ContactInfoComponent},
+      {path: 'security', component: SecuritySettingsComponent}
+    ]
+  }
 ];
 
 @NgModule({

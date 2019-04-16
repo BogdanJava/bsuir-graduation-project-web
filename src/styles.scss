@@ -18,8 +18,10 @@ $app-dark-theme: mat-light-theme($dark-primary, $dark-accent, $dark-warn);
 @include angular-material-theme($app-dark-theme);
 
 @import "~src/app/sidenav-list/sidenav-list.component";
+@import "~src/app/profile/security/password/password.component";
 
 @include sidenav-hover-colors($app-dark-theme);
+@include danger-message-mixin($app-dark-theme);
 
 // defaults
 
