@@ -15,7 +15,11 @@ export class HeaderComponent implements OnInit {
   public unreadMessagesCount: number = null;
   public pendingTasksCount: number = null;
   public tabs: TabItem[] = [
-    {text: 'Profile', path: 'profile', icon: 'account_circle', action: () => {}},
+    {
+      text: 'Profile', path: 'profile', icon: 'account_circle', action: () => {
+      }
+    },
+    new TabItem('Calendar', 'timeline', 'calendar'),
     {
       text: 'Logout', path: '', icon: 'exit_to_app', action: () => {
         this.authService.logout(() => {

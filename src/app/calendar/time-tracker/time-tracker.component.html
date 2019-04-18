@@ -1,0 +1,14 @@
+<mat-card class="timetracker-card">
+  <h2 class="mat-h2">Time tracker</h2>
+  <mat-divider></mat-divider>
+
+  <mat-form-field>
+    <input matInput
+           placeholder="Choose a date"
+           [satDatepicker]="picker"
+           [value]="date">
+    <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
+    <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+  </mat-form-field>
+
+</mat-card>

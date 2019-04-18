@@ -1,10 +1,11 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {
   MatBadgeModule,
   MatButtonModule,
   MatCardModule,
   MatDatepickerModule,
+  MatExpansionModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
@@ -13,10 +14,11 @@ import {
   MatProgressSpinnerModule,
   MatSidenavModule,
   MatSnackBarModule,
+  MatStepperModule,
   MatTabsModule,
-  MatToolbarModule,
-  MatStepperModule, MatExpansionModule
+  MatToolbarModule
 } from '@angular/material';
+import {SatDatepickerModule, SatNativeDateModule} from 'saturn-datepicker';
 
 @NgModule({
   declarations: [],
@@ -37,7 +39,9 @@ import {
     MatInputModule,
     MatTabsModule,
     MatStepperModule,
-    MatExpansionModule
+    MatExpansionModule,
+    SatDatepickerModule,
+    SatNativeDateModule
   ],
   exports: [
     MatSidenavModule,
@@ -55,7 +59,10 @@ import {
     MatInputModule,
     MatTabsModule,
     MatStepperModule,
-    MatExpansionModule
+    MatExpansionModule,
+    SatDatepickerModule,
+    SatNativeDateModule
   ]
 })
-export class MaterialModule {}
+export class MaterialModule {
+}

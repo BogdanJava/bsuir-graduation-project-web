@@ -7,6 +7,10 @@ import {AuthorizedGuard} from './authentication/authorized.guard';
 import {ProfileComponent} from './profile/profile.component';
 import {ContactInfoComponent} from './profile/contact-info/contact-info.component';
 import {SecuritySettingsComponent} from './profile/security/security-settings.component';
+import {CalendarComponent} from './calendar/calendar.component';
+import {OutOfOfficeComponent} from './calendar/out-of-office/out-of-office.component';
+import {TimeTrackerComponent} from './calendar/time-tracker/time-tracker.component';
+import {OtherRequestsComponent} from './calendar/other-requests/other-requests.component';
 
 const routes: Routes = [
   {redirectTo: '/login', pathMatch: 'full', path: ''},
@@ -16,6 +20,13 @@ const routes: Routes = [
     path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], canActivateChild: [AuthGuard], children: [
       {path: 'contact', component: ContactInfoComponent},
       {path: 'security', component: SecuritySettingsComponent}
+    ]
+  },
+  {
+    path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard], canActivateChild: [AuthGuard], children: [
+      {path: 'ooo', component: OutOfOfficeComponent},
+      {path: 'timetracker', component: TimeTrackerComponent},
+      {path: 'other', component: OtherRequestsComponent}
     ]
   }
 ];

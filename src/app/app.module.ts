@@ -16,6 +16,10 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ContactInfoComponent } from './profile/contact-info/contact-info.component';
 import { SecuritySettingsComponent } from './profile/security/security-settings.component';
 import { PasswordComponent } from './profile/security/password/password.component';
+import { CalendarComponent } from './calendar/calendar.component';
+import { OutOfOfficeComponent } from './calendar/out-of-office/out-of-office.component';
+import { TimeTrackerComponent } from './calendar/time-tracker/time-tracker.component';
+import { OtherRequestsComponent } from './calendar/other-requests/other-requests.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,11 @@ import { PasswordComponent } from './profile/security/password/password.componen
     ProfileComponent,
     ContactInfoComponent,
     SecuritySettingsComponent,
-    PasswordComponent
+    PasswordComponent,
+    CalendarComponent,
+    OutOfOfficeComponent,
+    TimeTrackerComponent,
+    OtherRequestsComponent
   ],
   imports: [
     BrowserModule,

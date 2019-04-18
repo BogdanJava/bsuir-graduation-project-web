@@ -1,0 +1,8 @@
+<nav mat-tab-nav-bar mat-align-tabs="center">
+  <a mat-tab-link *ngFor="let tab of tabs" [routerLink]="tab.path" routerLinkActive #rla="routerLinkActive"
+     [active]="rla.isActive">
+    {{tab.text}}
+  </a>
+</nav>
+
+<router-outlet></router-outlet>

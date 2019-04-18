@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TabItem} from '../model/TabItem';
+import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -12,7 +13,20 @@ export class ProfileComponent implements OnInit {
     new TabItem('Security settings', 'security', 'security')
   ];
 
+  constructor(private router: Router) {
+  }
+
   ngOnInit(): void {
+    if (this.router.url == '/profile') {
+      this.router.navigateByUrl(`${this.router.url}/contact`);
+    }
+    this.router.events.subscribe(e => {
+      if (e instanceof NavigationEnd) {
+        if (e.url === '/profile') {
+          this.router.navigateByUrl(`${this.router.url}/contact`);
+        }
+      }
+    });
   }
 
 }
