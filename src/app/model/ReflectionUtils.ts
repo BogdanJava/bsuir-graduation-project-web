@@ -1,5 +1,5 @@
 export class ReflectionUtils {
-  public static copyObject(object) {
+  public static getObjectCopy(object) {
     const copy = Object.create(object);
     Object.entries(object).forEach(fieldValuePair => {
       const fieldName = fieldValuePair[0];

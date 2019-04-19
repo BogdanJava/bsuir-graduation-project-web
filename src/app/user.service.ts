@@ -1,35 +1,27 @@
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { API_URL } from "./constants";
-import { UpdateUserDTO, User, UserPublicInfo } from "./model/User";
-import { AuthenticationService } from "./authentication/authentication.service";
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {API_URL} from './constants';
+import {UpdateUserDTO, User, UserPublicInfo} from './model/User';
+import {AuthenticationService} from './authentication/authentication.service';
+import {AbstractHttpService} from './abstract-http.service';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
-export class UserService {
-  constructor(private httpClient: HttpClient) {}
+export class UserService extends AbstractHttpService<User> {
+  constructor(httpClient: HttpClient) {
+    super(httpClient);
+  }
 
   public static getCurrentUsername() {
-    const token = localStorage.getItem("access_token");
-    return AuthenticationService.getInfoFromToken(token, "sub");
+    const token = localStorage.getItem('access_token');
+    return AuthenticationService.getInfoFromToken(token, 'sub');
   }
 
   public static getCurrentUserId() {
-    const token = localStorage.getItem("access_token");
-    return AuthenticationService.getInfoFromToken(token, "id");
-  }
-
-  private static authorizationHeader(): string {
-    const token = localStorage.getItem("access_token");
-    return `Bearer ${token}`;
-  }
-
-  public static getHeaders() {
-    return new HttpHeaders({
-      Authorization: UserService.authorizationHeader()
-    });
+    const token = localStorage.getItem('access_token');
+    return AuthenticationService.getInfoFromToken(token, 'id');
   }
 
   public getUserPublicInfo(username: string): Observable<UserPublicInfo> {
@@ -40,7 +32,7 @@ export class UserService {
 
   public getUser(username: string): Observable<User> {
     return this.httpClient.get<User>(`${API_URL}/users?username=${username}`, {
-      headers: UserService.getHeaders()
+      headers: AbstractHttpService.getHeaders()
     });
   }
 
@@ -48,7 +40,7 @@ export class UserService {
     return this.httpClient.get<number>(
       `${API_URL}/messages/count?username=${username}&read=0`,
       {
-        headers: UserService.getHeaders()
+        headers: AbstractHttpService.getHeaders()
       }
     );
   }
@@ -57,14 +49,18 @@ export class UserService {
     return this.httpClient.get<number>(
       `${API_URL}/tasks/count?username=${username}&pending=1`,
       {
-        headers: UserService.getHeaders()
+        headers: AbstractHttpService.getHeaders()
       }
     );
   }
 
   public updateUser(id: string, user: UpdateUserDTO) {
     return this.httpClient.put<User>(`${API_URL}/users/${id}`, user, {
-      headers: UserService.getHeaders()
+      headers: AbstractHttpService.getHeaders()
     });
+  }
+
+  protected getFilterEndpoint(): string {
+    return `${API_URL}/users/filter`;
   }
 }

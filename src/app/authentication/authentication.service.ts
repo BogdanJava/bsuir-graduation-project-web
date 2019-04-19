@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import * as jwtDecode from 'jwt-decode';
 import {User} from '../model/User';
 import {UserService} from '../user.service';
+import {AbstractHttpService} from '../abstract-http.service';
 
 @Injectable({
   providedIn: 'root'
@@ -67,14 +68,14 @@ export class AuthenticationService {
         new: newPassword
       },
       {
-        headers: UserService.getHeaders()
+        headers: AbstractHttpService.getHeaders()
       }
     );
   }
 
   public checkPassword(password: string): Observable<boolean> {
     return this.httpClient.post<boolean>(`${API_URL}/auth/check-password`, {password}, {
-      headers: UserService.getHeaders()
+      headers: AbstractHttpService.getHeaders()
     });
   }
 

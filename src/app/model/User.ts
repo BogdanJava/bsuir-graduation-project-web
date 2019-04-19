@@ -1,4 +1,5 @@
 import {Department} from './Department';
+import {BasicDocument} from './BasicDocument';
 
 export class UserPublicInfo {
   constructor(public id: string,
@@ -7,14 +8,16 @@ export class UserPublicInfo {
   }
 }
 
-export class User {
+export class User extends BasicDocument {
   constructor(public id: string,
               public username: string,
               public photoUrl?: string,
               public realName?: string,
               public birthday?: Date | number,
               public address?: string,
-              public department?: Department) {
+              public department?: Department,
+              public roles?: Role[]) {
+    super();
   }
 }
 
@@ -34,5 +37,8 @@ export class UpdateUserDTO {
     });
     return dto;
   }
+}
 
+export enum Role {
+  Admin = "ADMIN", User = "USER", Moderator = "MODERATOR"
 }

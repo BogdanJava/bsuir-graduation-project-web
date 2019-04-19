@@ -21,13 +21,13 @@ export class ContactInfoComponent implements OnInit {
     const username = UserService.getCurrentUsername();
     this.userService.getUser(username).subscribe(user => {
       user.birthday = new Date(user.birthday);
-      this.source = ReflectionUtils.copyObject(user);
-      this.user = ReflectionUtils.copyObject(user);
+      this.source = ReflectionUtils.getObjectCopy(user);
+      this.user = ReflectionUtils.getObjectCopy(user);
     });
   }
 
   public discardChanges(): void {
-    this.user = ReflectionUtils.copyObject(this.source);
+    this.user = ReflectionUtils.getObjectCopy(this.source);
   }
 
   public updateUser(): void {
@@ -40,8 +40,8 @@ export class ContactInfoComponent implements OnInit {
       UpdateUserDTO.fromUser(this.user)).subscribe(
       user => {
         user.birthday = new Date(user.birthday);
-        this.source = ReflectionUtils.copyObject(user);
-        this.user = ReflectionUtils.copyObject(user);
+        this.source = ReflectionUtils.getObjectCopy(user);
+        this.user = ReflectionUtils.getObjectCopy(user);
         this.notifications.pushNotification('User info updated');
       });
   }
