@@ -4,6 +4,13 @@
       <mat-icon>menu</mat-icon>
     </button>
     <div class="menu-wrapper">
+      <section id="requests" *ngIf="timeRequestsCount != null">
+        <button mat-icon-button>
+          <mat-icon [matBadge]="timeRequestsCount === 0 ? null : timeRequestsCount.toString()" matBadgeColor="warn">
+            event_available
+          </mat-icon>
+        </button>
+      </section>
       <section id="messages" *ngIf="unreadMessagesCount != null">
         <button mat-icon-button>
           <mat-icon [matBadge]="unreadMessagesCount === 0 ? null : unreadMessagesCount.toString()" matBadgeColor="warn">

@@ -30,3 +30,19 @@ $app-dark-theme: mat-light-theme($dark-primary, $dark-accent, $dark-warn);
 * {
   margin: 0;
 }
+
+.default-card {
+  width: 80%;
+  margin: 30px auto;
+}
+
+.default-form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 5;
+}
+
+.default-form mat-form-field {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

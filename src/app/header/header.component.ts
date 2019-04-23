@@ -4,6 +4,7 @@ import {UserService} from '../user.service';
 import {AuthenticationService} from '../authentication/authentication.service';
 import {TabItem} from '../model/TabItem';
 import {NotificationsService} from '../notifications.service';
+import {TimeRequestService} from '../time-request.service';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,7 @@ export class HeaderComponent implements OnInit {
   public user: User;
   public unreadMessagesCount: number = null;
   public pendingTasksCount: number = null;
+  public timeRequestsCount: number = null;
   public tabs: TabItem[] = [
     {
       text: 'Profile', path: 'profile', icon: 'account_circle', action: () => {
@@ -32,6 +34,7 @@ export class HeaderComponent implements OnInit {
   private clickMenuButtonEventEmitter = new EventEmitter();
 
   constructor(private userService: UserService,
+              private timeRequestService: TimeRequestService,
               private authService: AuthenticationService,
               private notifications: NotificationsService) {
   }
@@ -62,6 +65,9 @@ export class HeaderComponent implements OnInit {
       });
       this.userService.getPendingTasksCount(username).subscribe(count => {
         this.pendingTasksCount = count;
+      });
+      this.timeRequestService.getUnapprovedRequestsCount(UserService.getCurrentUserId()).subscribe(count => {
+        this.timeRequestsCount = count;
       });
     } else {
       this.unsetAll();
