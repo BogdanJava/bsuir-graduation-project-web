@@ -1,0 +1,53 @@
+@mixin admin-console-colors($theme) {
+
+  $accent: map_get($theme, accent);
+
+  .card-name {
+    text-align: center;
+    color: mat-contrast($accent, lighter);
+    transition-duration: .2s !important;
+  }
+
+  .console-card {
+    margin: 10px;
+    width: 250px;
+    height: 160px;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    background-color: mat-color($accent, lighter);
+    transition: all .2s !important;
+    cursor: pointer;
+  }
+
+  .open-card-icon {
+    height: 100px !important;
+    width: 100px !important;
+    align-self: center;
+    font-size: 100px;
+    color: mat-contrast($accent, lighter);
+    transition-duration: .2s !important;
+  }
+
+  .console-card:hover {
+    background-color: mat-color($accent, lighter-contrast);
+
+    .open-card-icon {
+      color: mat-color($accent, lighter);
+    }
+
+    .card-name {
+      color: mat-color($accent, lighter);
+    }
+  }
+}
+
+.card-link {
+  text-decoration: none ;
+}
+
+.cards-container {
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+}

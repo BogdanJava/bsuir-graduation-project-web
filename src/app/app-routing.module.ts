@@ -11,6 +11,11 @@ import {CalendarComponent} from './calendar/calendar.component';
 import {OutOfOfficeComponent} from './calendar/out-of-office/out-of-office.component';
 import {TimeTrackerComponent} from './calendar/time-tracker/time-tracker.component';
 import {OtherRequestsComponent} from './calendar/other-requests/other-requests.component';
+import {AdminConsoleComponent} from './admin/admin-console/admin-console.component';
+import {ApproveRequestComponent} from './admin/approve-request/approve-request.component';
+import {ManageUsersComponent} from './admin/create-user/manage-users.component';
+import {ProjectsComponent} from './projects/projects.component';
+import {AdminConsoleWrapperComponent} from './admin/admin-console-wrapper/admin-console-wrapper.component';
 
 const routes: Routes = [
   {redirectTo: '/login', pathMatch: 'full', path: ''},
@@ -27,6 +32,14 @@ const routes: Routes = [
       {path: 'ooo', component: OutOfOfficeComponent},
       {path: 'timetracker', component: TimeTrackerComponent},
       {path: 'other', component: OtherRequestsComponent}
+    ]
+  },
+  {
+    path: 'admin-console', component: AdminConsoleWrapperComponent, canActivate: [AuthGuard], canActivateChild: [AuthGuard], children: [
+      {path: 'approve', component: ApproveRequestComponent},
+      {path: 'users', component: ManageUsersComponent},
+      {path: 'projects', component: ProjectsComponent},
+      {path: '', component: AdminConsoleComponent}
     ]
   }
 ];

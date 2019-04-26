@@ -19,11 +19,13 @@ $app-dark-theme: mat-light-theme($dark-primary, $dark-accent, $dark-warn);
 
 @import "~src/app/sidenav-list/sidenav-list.component";
 @import "~src/app/profile/security/password/password.component";
+@import "~src/app/admin/admin-console/admin-console.component";
 @import "~saturn-datepicker/theming";
 
 @include sat-datepicker-theme($app-dark-theme);
 @include sidenav-hover-colors($app-dark-theme);
 @include danger-message-mixin($app-dark-theme);
+@include admin-console-colors($app-dark-theme);
 
 // defaults
 

@@ -1,0 +1,8 @@
+<div class="cards-container">
+  <a class="card-link" [routerLink]="card.ref" *ngFor="let card of cards">
+    <mat-card class="console-card">
+      <mat-icon class="open-card-icon" [textContent]="card.icon"></mat-icon>
+      <span class="card-name mat-h1" [textContent]="card.name"></span>
+    </mat-card>
+  </a>
+</div>

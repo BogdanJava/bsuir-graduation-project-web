@@ -22,13 +22,14 @@ export class HeaderComponent implements OnInit {
       }
     },
     new TabItem('Calendar', 'timeline', 'calendar'),
+    new TabItem('Admin console', 'supervisor_account', 'admin-console'),
     {
       text: 'Logout', path: '', icon: 'exit_to_app', action: () => {
         this.authService.logout(() => {
           this.notifications.pushNotification('Logged out');
         });
       }
-    }
+    },
   ];
   @Output()
   private clickMenuButtonEventEmitter = new EventEmitter();

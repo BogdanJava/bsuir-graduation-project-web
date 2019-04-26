@@ -20,6 +20,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { OutOfOfficeComponent } from './calendar/out-of-office/out-of-office.component';
 import { TimeTrackerComponent } from './calendar/time-tracker/time-tracker.component';
 import { OtherRequestsComponent } from './calendar/other-requests/other-requests.component';
+import {AdminModule} from './admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -43,9 +44,9 @@ import { OtherRequestsComponent } from './calendar/other-requests/other-requests
     AuthenticationModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MatMenuModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AdminModule
   ],
   providers: [],
   bootstrap: [AppComponent]
