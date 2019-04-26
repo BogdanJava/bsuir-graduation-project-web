@@ -79,5 +79,6 @@ export class HeaderComponent implements OnInit {
     this.user = null;
     this.unreadMessagesCount = null;
     this.pendingTasksCount = null;
+    this.timeRequestsCount = null;
   }
 }
