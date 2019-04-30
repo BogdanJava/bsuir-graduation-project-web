@@ -6,7 +6,6 @@ export class TimeRequest extends BasicDocument {
               public type?: RequestType,
               public startDate?: Date,
               public endDate?: Date,
-              public projectId?: string,
               public description?: string,
               public approved?: boolean,
               public approverId?: string) {

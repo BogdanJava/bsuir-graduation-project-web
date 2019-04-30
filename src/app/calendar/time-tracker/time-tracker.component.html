@@ -1,0 +1,50 @@
+<mat-card class="default-card">
+  <h2 class="mat-h2">Worktime tracking</h2>
+  <mat-divider></mat-divider>
+
+  <form class="default-form worktime-form" [formGroup]="worktimeRequestForm" (ngSubmit)="sendTimeRequest(worktimeRequestForm)">
+    <mat-form-field>
+      <input matInput
+             formControlName="dates"
+             (dateChange)="setDatesToTimeRequest()"
+             placeholder="Time period"
+             [satDatepicker]="picker"
+             [value]="dateRange">
+      <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
+      <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+    </mat-form-field>
+
+    <mat-divider [inset]="true"></mat-divider>
+
+    <mat-form-field *ngIf="reviewers">
+      <mat-label>Select a reviewer</mat-label>
+      <mat-select formControlName="reviewer" [(value)]="worktimeRequest.approverId" *ngFor="let reviewer of reviewers">
+        <mat-option [value]="reviewer.id" [innerText]="reviewer.realName"></mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="projects">
+      <mat-label>Select a project you are working on</mat-label>
+      <mat-select formControlName="project" [(value)]="worktimeRequest.projectId" *ngFor="let project of projects">
+        <mat-option [value]="project.id" [innerText]="project.name"></mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-divider [inset]="true"></mat-divider>
+
+    <mat-form-field>
+      <textarea class="description-form-field" formControlName="description" name="description"
+                [(ngModel)]="worktimeRequest.description" matInput
+                placeholder="A few words about the cause"></textarea>
+    </mat-form-field>
+
+    <div class="button-container">
+      <button type="submit" class="login-button" mat-flat-button color="accent">
+        Send
+        <mat-icon>schedule</mat-icon>
+      </button>
+    </div>
+
+  </form>
+
+</mat-card>
