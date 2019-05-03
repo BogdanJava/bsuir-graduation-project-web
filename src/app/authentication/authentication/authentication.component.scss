@@ -33,25 +33,6 @@
   margin: 0 auto;
 }
 
-.thumbnail {
-  position: relative;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.portrait {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 100%;
-  height: auto;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-
 .user-info h5 {
   line-height: 20px;
   padding-left: 5px;

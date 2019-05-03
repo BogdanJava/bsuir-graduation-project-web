@@ -1,4 +1,9 @@
-<mat-nav-list class="sidenav-list">
+<mat-nav-list class="sidenav-list" id="sidenavList">
+  <a mat-list-item>
+    <mat-icon>apps</mat-icon>
+    <span class="mat-h2 menu-header">Menu</span>
+  </a>
+  <mat-divider></mat-divider>
   <a mat-list-item (click)="closeSidenav(tab.action)"
      *ngFor="let tab of tabList" [routerLink]="tab.path">
     <mat-icon>{{tab.icon}}</mat-icon>

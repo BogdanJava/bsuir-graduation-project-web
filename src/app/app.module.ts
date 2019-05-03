@@ -21,6 +21,8 @@ import { OutOfOfficeComponent } from './calendar/out-of-office/out-of-office.com
 import { TimeTrackerComponent } from './calendar/time-tracker/time-tracker.component';
 import { OtherRequestsComponent } from './calendar/other-requests/other-requests.component';
 import {AdminModule} from './admin/admin.module';
+import { TimelineComponent } from './timeline/timeline.component';
+import { HelpComponent } from './help/help.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import {AdminModule} from './admin/admin.module';
     CalendarComponent,
     OutOfOfficeComponent,
     TimeTrackerComponent,
-    OtherRequestsComponent
+    OtherRequestsComponent,
+    TimelineComponent,
+    HelpComponent
   ],
   imports: [
     BrowserModule,

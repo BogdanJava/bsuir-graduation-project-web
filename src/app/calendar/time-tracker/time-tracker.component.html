@@ -14,12 +14,19 @@
       <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
     </mat-form-field>
 
+    <mat-form-field>
+      <input formControlName="hours" name="hours" type="number"
+                [(ngModel)]="worktimeRequest.hours" matInput
+                placeholder="Number of hours per day"/>
+      <mat-error *ngIf="hasError('hours', 'invalidHoursNumber')">Hours number must be between 1 and 24</mat-error>
+    </mat-form-field>
+
     <mat-divider [inset]="true"></mat-divider>
 
     <mat-form-field *ngIf="reviewers">
       <mat-label>Select a reviewer</mat-label>
       <mat-select formControlName="reviewer" [(value)]="worktimeRequest.approverId" *ngFor="let reviewer of reviewers">
-        <mat-option [value]="reviewer.id" [innerText]="reviewer.realName"></mat-option>
+        <mat-option [value]="reviewer.id" [innerText]="reviewer.realName ? reviewer.realName : reviewer.username"></mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -35,7 +42,7 @@
     <mat-form-field>
       <textarea class="description-form-field" formControlName="description" name="description"
                 [(ngModel)]="worktimeRequest.description" matInput
-                placeholder="A few words about the cause"></textarea>
+                placeholder="Description"></textarea>
     </mat-form-field>
 
     <div class="button-container">

@@ -3,6 +3,7 @@ export class WorktimeRequest {
               public userId?: string,
               public startDate?: Date,
               public endDate?: Date,
+              public hours?: number,
               public description?: string,
               public projectId?: string,
               public approverId?: string,

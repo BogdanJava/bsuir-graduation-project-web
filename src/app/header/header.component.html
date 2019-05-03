@@ -5,7 +5,7 @@
     </button>
     <div class="menu-wrapper">
       <section id="requests" *ngIf="timeRequestsCount != null">
-        <button mat-icon-button>
+        <button mat-icon-button routerLink="admin-console/approve">
           <mat-icon [matBadge]="timeRequestsCount === 0 ? null : timeRequestsCount.toString()" matBadgeColor="warn">
             event_available
           </mat-icon>

@@ -1,0 +1,54 @@
+<mat-card class="filter-card">
+  <h2 class="mat-h2">Timeline</h2>
+  <mat-divider></mat-divider>
+
+  <mat-expansion-panel style="margin-top: 30px">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Filter
+      </mat-panel-title>
+      <mat-panel-description>
+        Specify date, search terms or other parameters
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field>
+      <input matInput placeholder="Search for an item">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        name="startDate"
+        matInput
+        [matDatepicker]="startDatePicker"
+        placeholder="Start date"
+        [value]="startDate"
+        [(ngModel)]="startDate"
+      />
+      <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #startDatePicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        name="endDate"
+        matInput
+        [matDatepicker]="endDatePicker"
+        placeholder="End date"
+        [value]="endDate"
+        [(ngModel)]="endDate"
+      />
+      <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #endDatePicker></mat-datepicker>
+    </mat-form-field>
+
+    <div class="button-container">
+      <button type="button" mat-flat-button color="primary">
+        Apply
+      </button>
+      <button type="button" mat-flat-button color="warn">
+        Cancel
+      </button>
+    </div>
+  </mat-expansion-panel>
+
+</mat-card>

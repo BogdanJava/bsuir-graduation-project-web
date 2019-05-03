@@ -17,10 +17,11 @@ export abstract class AbstractHttpService<T> {
     });
   }
 
-  public getByFilter(filter: object, projection: string[]) {
-    filter = {filter: filter};
-    return this.httpClient.get<T[]>(`${this.getFilterEndpoint()}?filter=${encodeURIComponent(JSON.stringify(filter))}
-    &projection=${encodeURIComponent(JSON.stringify(projection))}`, {
+  public getByFilter(filter: object, projection?: string[]) {
+    let filterEncoded = encodeURIComponent(JSON.stringify({filter: filter}));
+    let projectionEncoded = projection ? encodeURIComponent(JSON.stringify(projection)) : null;
+    return this.httpClient.get<T[]>(`${this.getFilterEndpoint()}?filter=${filterEncoded}
+    ${projectionEncoded ? `&projection=${projectionEncoded}` : ''}`, {
       headers: AbstractHttpService.getHeaders()
     });
   }

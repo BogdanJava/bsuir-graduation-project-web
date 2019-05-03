@@ -39,7 +39,7 @@ export class OutOfOfficeComponent implements OnInit {
         value: [Role.Admin, Role.Moderator]
       }
     };
-    let projection = ['id', 'realName'];
+    let projection = ['id', 'realName', 'username'];
     this.userService.getByFilter(filter, projection).subscribe(users => {
       this.reviewers = users;
     });

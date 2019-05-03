@@ -5,6 +5,9 @@ import {AuthenticationService} from '../authentication/authentication.service';
 import {TabItem} from '../model/TabItem';
 import {NotificationsService} from '../notifications.service';
 import {TimeRequestService} from '../time-request.service';
+import {WorktimeRequestService} from '../worktime.service';
+import {merge, Observable} from 'rxjs';
+import {IconRef} from '../model/IconRef';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +24,6 @@ export class HeaderComponent implements OnInit {
       text: 'Profile', path: 'profile', icon: 'account_circle', action: () => {
       }
     },
-    new TabItem('Calendar', 'timeline', 'calendar'),
     new TabItem('Admin console', 'supervisor_account', 'admin-console'),
     {
       text: 'Logout', path: '', icon: 'exit_to_app', action: () => {
@@ -36,6 +38,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(private userService: UserService,
               private timeRequestService: TimeRequestService,
+              private worktimeRequestService: WorktimeRequestService,
               private authService: AuthenticationService,
               private notifications: NotificationsService) {
   }
@@ -67,8 +70,14 @@ export class HeaderComponent implements OnInit {
       this.userService.getPendingTasksCount(username).subscribe(count => {
         this.pendingTasksCount = count;
       });
-      this.timeRequestService.getUnapprovedRequestsCount(UserService.getCurrentUserId()).subscribe(count => {
-        this.timeRequestsCount = count;
+      const timeRequestsCountObservable = this.timeRequestService.getUnapprovedRequestsCount(UserService.getCurrentUserId());
+      const worktimeRequestsCountObservable = this.worktimeRequestService.getUnapprovedRequestsCount(UserService.getCurrentUserId());
+      merge(timeRequestsCountObservable, worktimeRequestsCountObservable).subscribe(result => {
+        if (this.timeRequestsCount == null) {
+          this.timeRequestsCount = result;
+        } else {
+          this.timeRequestsCount += result;
+        }
       });
     } else {
       this.unsetAll();

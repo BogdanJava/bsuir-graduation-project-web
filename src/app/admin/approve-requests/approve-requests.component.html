@@ -1,0 +1,112 @@
+<mat-card class="filter-card">
+  <h2 class="mat-h2 admin-console-header">Approve time & worktime requests</h2>
+  <mat-divider></mat-divider>
+
+  <mat-expansion-panel style="margin-top: 30px">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Filter
+      </mat-panel-title>
+      <mat-panel-description>
+        Specify date, search terms or other parameters
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field>
+      <input matInput placeholder="Search for an item">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        name="startDate"
+        matInput
+        [matDatepicker]="startDatePicker"
+        placeholder="Start date"
+        [value]="startDate"
+        [(ngModel)]="startDate"
+      />
+      <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #startDatePicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        name="endDate"
+        matInput
+        [matDatepicker]="endDatePicker"
+        placeholder="End date"
+        [value]="endDate"
+        [(ngModel)]="endDate"
+      />
+      <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #endDatePicker></mat-datepicker>
+    </mat-form-field>
+
+    <div class="button-container">
+      <button type="button" mat-flat-button color="primary">
+        Apply
+      </button>
+      <button type="button" mat-flat-button color="warn">
+        Cancel
+      </button>
+    </div>
+  </mat-expansion-panel>
+
+</mat-card>
+
+<section id="timeRequestCards" class="card-section" *ngIf="timeRequests">
+  <p class="mat-h3">Time requests</p>
+  <mat-divider></mat-divider>
+  <div class="request-card-container">
+    <mat-card *ngFor="let timeRequest of timeRequests" class="request-card">
+      <mat-card-header>
+        <div mat-card-avatar [ngStyle]="configureUserAvatar(timeRequest)">
+        </div>
+        <mat-card-title [innerText]="user(timeRequest.userId).realName"></mat-card-title>
+        <mat-card-subtitle [innerText]="timeRequest.type"></mat-card-subtitle>
+      </mat-card-header>
+      <mat-divider inset="true"></mat-divider>
+      <mat-card-content>
+        <p [innerText]="timeRequest.description" ъ></p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-stroked-button color="primary">
+          Approve
+          <mat-icon>check_circle_outline</mat-icon>
+        </button>
+        <button mat-stroked-button color="warn">
+          Decline
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</section>
+
+<section id="worktimeRequestCards" class="card-section">
+  <div class="mat-h3">Worktime requests</div>
+  <mat-divider></mat-divider>
+  <div class="request-card-container">
+    <mat-card *ngFor="let worktimeRequest of worktimeRequests" class="request-card">
+      <mat-card-header>
+        <div mat-card-avatar [ngStyle]="configureUserAvatar(worktimeRequest)">
+        </div>
+        <mat-card-title [innerText]="user(worktimeRequest.userId).realName"></mat-card-title>
+        <mat-card-subtitle>{{worktimeRequest.hours}} hours per day</mat-card-subtitle>
+      </mat-card-header>
+      <mat-divider inset="true"></mat-divider>
+      <mat-card-content>
+        <p [innerText]="worktimeRequest.description" ъ></p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-stroked-button color="primary">
+          Approve
+          <mat-icon>check_circle_outline</mat-icon>
+        </button>
+        <button mat-stroked-button color="warn">
+          Decline
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</section>

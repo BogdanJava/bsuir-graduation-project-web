@@ -30,7 +30,7 @@
     <mat-form-field *ngIf="reviewers">
       <mat-label>Select a reviewer</mat-label>
       <mat-select formControlName="reviewer" [(value)]="timeRequest.approverId" *ngFor="let reviewer of reviewers">
-        <mat-option [value]="reviewer.id" [innerText]="reviewer.realName"></mat-option>
+        <mat-option [value]="reviewer.id" [innerText]="reviewer.realName ? reviewer.realName : reviewer.username"></mat-option>
       </mat-select>
     </mat-form-field>
 

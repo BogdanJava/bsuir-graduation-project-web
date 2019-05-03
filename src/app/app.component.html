@@ -3,8 +3,8 @@
     <app-sidenav-list (clickLinkEventEmitter)="sidenav.close()"></app-sidenav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-header (clickMenuButtonEventEmitter)="sidenav.toggle()"></app-header>
-    <main>
+    <app-header (clickMenuButtonEventEmitter)="toggleSidenav(sidenav)"></app-header>
+    <main id="main">
       <router-outlet></router-outlet>
     </main>
   </mat-sidenav-content>

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Project} from '../../model/Project';
 import {SatDatepickerRangeValue} from 'saturn-datepicker';
 import {Role, User} from '../../model/User';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {UserService} from '../../user.service';
 import {NotificationsService} from '../../notifications.service';
 import {WorktimeRequest} from '../../model/WorktimeRequest';
@@ -36,20 +36,21 @@ export class TimeTrackerComponent implements OnInit {
       dates: new FormControl('', [Validators.required]),
       reviewer: new FormControl('', [Validators.required]),
       project: new FormControl('', [Validators.required]),
+      hours: new FormControl('', [Validators.required, TimeTrackerComponent.hoursNumberValidation]),
       description: new FormControl('', [])
     });
-    let projection = ['id', 'realName'];
+    let projection = ['id', 'realName', 'username'];
     this.userService.getByFilter({roles: {operator: 'IN', value: [Role.Admin, Role.Moderator]}}, projection).subscribe(users => {
       this.reviewers = users;
     });
     this.projectService.getByUserId(UserService.getCurrentUserId()).subscribe(projects => {
       if (projects.length > 0) {
-        this.projects = projects
+        this.projects = projects;
       } else {
         this.projects = [{
-          description: "No project",
-          name: "Idle"
-        }]
+          description: 'No project',
+          name: 'Idle'
+        }];
       }
     });
     this.setDatesToTimeRequest();
@@ -75,4 +76,8 @@ export class TimeTrackerComponent implements OnInit {
     return this.worktimeRequestForm.controls[controlName].hasError(errorType);
   }
 
+  private static hoursNumberValidation(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    return Number.isInteger(value) && value > 0 && value <= 24 ? null : {'invalidHoursNumber': {value: true}};
+  }
 }

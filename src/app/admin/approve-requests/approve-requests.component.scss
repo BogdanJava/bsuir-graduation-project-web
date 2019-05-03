@@ -1,0 +1,45 @@
+mat-form-field {
+  margin-right: 10px;
+}
+
+.button-container button {
+  margin-right: 10px;
+}
+
+.tab-header {
+  margin-top: 30px;
+  margin-bottom: 0;
+}
+
+.card-section {
+  margin: 20px;
+}
+
+.request-card-container {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.request-card {
+  flex: 1 0 29%; /* explanation below */
+  margin: 5px;
+  max-width: 29%;
+}
+
+.request-card-user-img {
+  position: relative;
+  width: inherit;
+  height: inherit;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.card-section mat-card-content {
+  margin-top: 10px;
+  min-height: 20px;
+}
+
+.card-section mat-card-actions button {
+  margin-right: 10px;
+}
