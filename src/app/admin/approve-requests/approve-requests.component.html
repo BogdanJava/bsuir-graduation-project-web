@@ -2,7 +2,7 @@
   <h2 class="mat-h2 admin-console-header">Approve time & worktime requests</h2>
   <mat-divider></mat-divider>
 
-  <mat-expansion-panel style="margin-top: 30px">
+  <mat-expansion-panel style="margin-top: 30px" #filterPanel>
     <mat-expansion-panel-header>
       <mat-panel-title>
         Filter
@@ -11,11 +11,6 @@
         Specify date, search terms or other parameters
       </mat-panel-description>
     </mat-expansion-panel-header>
-
-    <mat-form-field>
-      <input matInput placeholder="Search for an item">
-    </mat-form-field>
-
     <mat-form-field>
       <input
         name="startDate"
@@ -40,40 +35,72 @@
       <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #endDatePicker></mat-datepicker>
     </mat-form-field>
+    <mat-form-field>
+      <mat-label>Request status</mat-label>
+      <mat-select [(value)]="status">
+        <mat-option value="ANY">Any</mat-option>
+        <mat-option value="PENDING">Pending</mat-option>
+        <mat-option value="APPROVED">Approved</mat-option>
+        <mat-option value="DECLINED">Declined</mat-option>
+      </mat-select>
+    </mat-form-field>
 
     <div class="button-container">
-      <button type="button" mat-flat-button color="primary">
+      <button type="button" mat-flat-button color="primary" (click)="applyFilter(filterPanel)">
         Apply
-      </button>
-      <button type="button" mat-flat-button color="warn">
-        Cancel
       </button>
     </div>
   </mat-expansion-panel>
 
+  <mat-chip-list class="filter-entries">
+    <mat-chip *ngFor="let entry of filter.getFilterList()" removable="true"
+              (removed)="removeFilterEntry(entry)">
+      {{entry.field}} {{operatorName(entry.operator)}} {{entry.value}}
+      <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+  </mat-chip-list>
+
 </mat-card>
 
-<section id="timeRequestCards" class="card-section" *ngIf="timeRequests">
+<section id="timeRequestCards" class="card-section" *ngIf="timeRequests && timeRequests.length > 0">
   <p class="mat-h3">Time requests</p>
   <mat-divider></mat-divider>
   <div class="request-card-container">
     <mat-card *ngFor="let timeRequest of timeRequests" class="request-card">
-      <mat-card-header>
+      <mat-card-header *ngIf="timeRequestsUsersLoaded">
         <div mat-card-avatar [ngStyle]="configureUserAvatar(timeRequest)">
         </div>
         <mat-card-title [innerText]="user(timeRequest.userId).realName"></mat-card-title>
-        <mat-card-subtitle [innerText]="timeRequest.type"></mat-card-subtitle>
+        <mat-card-subtitle [innerText]="getRequestTypeText(timeRequest.type)"></mat-card-subtitle>
+        <div class="request-created-date mat-body-strong">
+          CREATED {{timeRequest.created | date:'MMM d' | uppercase}}
+        </div>
       </mat-card-header>
       <mat-divider inset="true"></mat-divider>
       <mat-card-content>
-        <p [innerText]="timeRequest.description" ъ></p>
+        <div class="request-details">
+          <div class="request-details-element">
+            <span class="request-details-element-name mat-body-2">Period:</span>
+            <span class="request-details-element-value mat-body-2">
+              From {{timeRequest.startDate | date}} to {{timeRequest.endDate | date}}
+            </span>
+          </div>
+          <div class="request-details-element" *ngIf="timeRequest.description && timeRequest.description != ''">
+            <span class="request-details-element-name mat-body-2">Description:</span>
+            <span class="request-details-element-value mat-body-2" [innerText]="timeRequest.description"></span>
+          </div>
+          <div class="request-details-element">
+            <span class="request-details-element-name mat-body-2">Last updated:</span>
+            <span class="request-details-element-value mat-body-2" [innerText]="timeRequest.updated | date"></span>
+          </div>
+        </div>
       </mat-card-content>
-      <mat-card-actions>
-        <button mat-stroked-button color="primary">
+      <mat-card-actions align="center">
+        <button mat-stroked-button color="primary" (click)="processTimeRequest(timeRequest.id, true)">
           Approve
           <mat-icon>check_circle_outline</mat-icon>
         </button>
-        <button mat-stroked-button color="warn">
+        <button mat-stroked-button color="warn" (click)="processTimeRequest(timeRequest.id, false)">
           Decline
           <mat-icon>cancel</mat-icon>
         </button>
@@ -82,27 +109,53 @@
   </div>
 </section>
 
-<section id="worktimeRequestCards" class="card-section">
+<section id="worktimeRequestCards" class="card-section" *ngIf="worktimeRequests && worktimeRequests.length > 0">
   <div class="mat-h3">Worktime requests</div>
   <mat-divider></mat-divider>
   <div class="request-card-container">
     <mat-card *ngFor="let worktimeRequest of worktimeRequests" class="request-card">
-      <mat-card-header>
+      <mat-card-header *ngIf="worktimeRequestsUsersLoaded">
         <div mat-card-avatar [ngStyle]="configureUserAvatar(worktimeRequest)">
         </div>
-        <mat-card-title [innerText]="user(worktimeRequest.userId).realName"></mat-card-title>
+        <mat-card-title *ngIf="worktimeRequestsUsersLoaded"
+                        [innerText]="user(worktimeRequest.userId).realName"></mat-card-title>
         <mat-card-subtitle>{{worktimeRequest.hours}} hours per day</mat-card-subtitle>
+        <div class="request-created-date mat-body-strong">
+          CREATED {{worktimeRequest.created | date:'MMM d' | uppercase}}
+        </div>
       </mat-card-header>
       <mat-divider inset="true"></mat-divider>
       <mat-card-content>
-        <p [innerText]="worktimeRequest.description" ъ></p>
+        <div class="request-details">
+          <div class="request-details-element">
+            <span class="request-details-element-name mat-body-2">Period:</span>
+            <span class="request-details-element-value mat-body-2">
+              From {{worktimeRequest.startDate | date}} to {{worktimeRequest.endDate | date}}
+            </span>
+          </div>
+          <div class="request-details-element" *ngIf="worktimeRequest.description && worktimeRequest.description != ''">
+            <span class="request-details-element-name mat-body-2">Description:</span>
+            <span class="request-details-element-value mat-body-2" [innerText]="worktimeRequest.description"></span>
+          </div>
+          <div class="request-details-element">
+            <span class="request-details-element-name mat-body-2">Project:</span>
+            <span class="request-details-element-value mat-body-2"
+                  *ngIf="projectsLoaded"
+                  [innerText]="project(worktimeRequest.projectId).name">
+            </span>
+          </div>
+          <div class="request-details-element">
+            <span class="request-details-element-name mat-body-2">Last updated:</span>
+            <span class="request-details-element-value mat-body-2" [innerText]="worktimeRequest.updated | date"></span>
+          </div>
+        </div>
       </mat-card-content>
-      <mat-card-actions>
-        <button mat-stroked-button color="primary">
+      <mat-card-actions align="center">
+        <button mat-stroked-button color="primary" (click)="processWorktimeRequest(worktimeRequest.id, true)">
           Approve
           <mat-icon>check_circle_outline</mat-icon>
         </button>
-        <button mat-stroked-button color="warn">
+        <button mat-stroked-button color="warn" (click)="processWorktimeRequest(worktimeRequest.id, false)">
           Decline
           <mat-icon>cancel</mat-icon>
         </button>
@@ -110,3 +163,10 @@
     </mat-card>
   </div>
 </section>
+
+<section id="emptyLabel" *ngIf="noDataFound()">
+  <p class="mat-body-1 empty-label">No requests found</p>
+</section>
+
+<mat-spinner class="loading-spinner" *ngIf="timeRequestsLoading || worktimeRequestsLoading"></mat-spinner>
+

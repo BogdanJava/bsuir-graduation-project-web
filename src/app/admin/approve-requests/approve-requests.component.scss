@@ -43,3 +43,61 @@ mat-form-field {
 .card-section mat-card-actions button {
   margin-right: 10px;
 }
+
+.request-details {
+
+}
+
+.request-details-element {
+  display: flex;
+  justify-content: space-between;
+}
+
+.request-details-element-name {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+@mixin approve-requests-elements($theme) {
+  $accent: map_get($theme, accent);
+  $primary: map_get($theme, primary);
+
+  .request-created-date {
+    margin-left: auto;
+    height: fit-content;
+    border: 2px solid mat-color($primary, lighter);
+    border-radius: 15px;
+    padding: 0 10px;
+    font-size: 8px;
+    font-weight: 700;
+    color: mat-color($primary, lighter)
+  }
+
+  .request-updated-date {
+    margin-left: auto;
+    height: fit-content;
+    border: 2px solid mat-color($accent);
+    border-radius: 15px;
+    padding: 0 10px;
+    font-size: 10px;
+    font-weight: 700;
+    color: mat-color($accent)
+
+  }
+
+}
+
+.filter-entries {
+  display: block;
+  margin-top: 15px;
+}
+
+.empty-label {
+  text-align: center;
+  margin-top: 50px;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.loading-spinner {
+  margin: 0 auto;
+  margin-top: 50px;
+}

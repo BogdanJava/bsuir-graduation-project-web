@@ -27,8 +27,8 @@ export class WorktimeRequestService extends AbstractHttpService<WorktimeRequest>
     });
   }
 
-  approveRequest(requestId: string): Observable<WorktimeRequest> {
-    return this.http.put<TimeRequest>(`${API_URL}/worktime/${requestId}`, {}, {
+  approveRequest(requestId: string, approved: boolean): Observable<WorktimeRequest> {
+    return this.http.put<TimeRequest>(`${API_URL}/worktime/${requestId}`, {approved: approved}, {
       headers: UserService.getHeaders()
     });
   }

@@ -11,6 +11,30 @@ export class TimeRequest extends BasicDocument {
               public approverId?: string) {
     super();
   }
+
+  public static getRequestTypeText(type: string): string {
+    let typeString;
+    switch (type) {
+      case 'BUSINESS_LEAVE':
+        typeString = 'Business leave';
+        break;
+      case 'VACATION':
+        typeString = 'Vacation';
+        break;
+      case 'UNPAID':
+        typeString = 'Unpaid';
+        break;
+      case 'TIME_SHIFT':
+        typeString = 'Time shift';
+        break;
+      case 'ILLNESS':
+        typeString = 'Illness';
+        break;
+      default:
+        typeString = '';
+    }
+    return typeString;
+  }
 }
 
 export enum RequestType {

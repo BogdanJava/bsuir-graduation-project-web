@@ -1,20 +1,19 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {DataFilter} from './model/DataFilter';
 
 export abstract class AbstractHttpService<T> {
   protected constructor(protected httpClient: HttpClient) {
-  }
-
-  protected abstract getFilterEndpoint(): string;
-
-  private static authorizationHeader(): string {
-    const token = localStorage.getItem('access_token');
-    return `Bearer ${token}`;
   }
 
   public static getHeaders() {
     return new HttpHeaders({
       Authorization: AbstractHttpService.authorizationHeader()
     });
+  }
+
+  private static authorizationHeader(): string {
+    const token = localStorage.getItem('access_token');
+    return `Bearer ${token}`;
   }
 
   public getByFilter(filter: object, projection?: string[]) {
@@ -25,4 +24,6 @@ export abstract class AbstractHttpService<T> {
       headers: AbstractHttpService.getHeaders()
     });
   }
+
+  protected abstract getFilterEndpoint(): string;
 }

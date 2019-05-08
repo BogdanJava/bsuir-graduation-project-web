@@ -4,14 +4,17 @@ import {
   MatBadgeModule,
   MatButtonModule,
   MatCardModule,
+  MatChipsModule,
   MatDatepickerModule,
   MatExpansionModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatListModule, MatMenuModule,
+  MatListModule,
+  MatMenuModule,
   MatNativeDateModule,
-  MatProgressSpinnerModule, MatSelectModule,
+  MatProgressSpinnerModule,
+  MatSelectModule,
   MatSidenavModule,
   MatSnackBarModule,
   MatStepperModule,
@@ -44,6 +47,7 @@ import {SatDatepickerModule, SatNativeDateModule} from 'saturn-datepicker';
     SatNativeDateModule,
     MatSelectModule,
     MatMenuModule,
+    MatChipsModule
   ],
   exports: [
     MatSidenavModule,
@@ -65,7 +69,8 @@ import {SatDatepickerModule, SatNativeDateModule} from 'saturn-datepicker';
     SatDatepickerModule,
     SatNativeDateModule,
     MatSelectModule,
-    MatMenuModule
+    MatMenuModule,
+    MatChipsModule
   ]
 })
 export class MaterialModule {

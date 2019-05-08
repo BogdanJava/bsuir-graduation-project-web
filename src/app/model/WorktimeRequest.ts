@@ -1,4 +1,6 @@
-export class WorktimeRequest {
+import {BasicDocument} from './BasicDocument';
+
+export class WorktimeRequest extends BasicDocument {
   constructor(public id?: string,
               public userId?: string,
               public startDate?: Date,
@@ -7,5 +9,7 @@ export class WorktimeRequest {
               public description?: string,
               public projectId?: string,
               public approverId?: string,
-              public approved?: boolean) {}
+              public approved?: boolean) {
+    super();
+  }
 }

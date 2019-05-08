@@ -26,10 +26,11 @@ export class TimeRequestService extends AbstractHttpService<TimeRequest> {
     });
   }
 
-  approveRequest(requestId: string): Observable<TimeRequest> {
-    return this.http.put<TimeRequest>(`${API_URL}/time-request/${requestId}`, {}, {
-      headers: UserService.getHeaders()
-    });
+  approveRequest(requestId: string, approved: boolean): Observable<TimeRequest> {
+    return this.http.put<TimeRequest>(`${API_URL}/time-request/${requestId}`,
+      {approved: approved}, {
+        headers: UserService.getHeaders()
+      });
   }
 
   protected getFilterEndpoint(): string {
