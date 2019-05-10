@@ -95,7 +95,7 @@
           </div>
         </div>
       </mat-card-content>
-      <mat-card-actions align="center">
+      <mat-card-actions align="center" *ngIf="timeRequest.isPending()">
         <button mat-stroked-button color="primary" (click)="processTimeRequest(timeRequest.id, true)">
           Approve
           <mat-icon>check_circle_outline</mat-icon>
@@ -105,6 +105,12 @@
           <mat-icon>cancel</mat-icon>
         </button>
       </mat-card-actions>
+      <div class="approved" *ngIf="timeRequest.isApproved()">
+        approved
+      </div>
+      <div class="approved" *ngIf="timeRequest.isDeclined()">
+        declined
+      </div>
     </mat-card>
   </div>
 </section>

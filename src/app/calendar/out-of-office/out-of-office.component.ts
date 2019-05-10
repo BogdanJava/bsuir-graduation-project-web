@@ -49,8 +49,11 @@ export class OutOfOfficeComponent implements OnInit {
   }
 
   setDatesToTimeRequest() {
-    this.timeRequest.startDate = this.oooForm.controls['dates'].value.begin;
-    this.timeRequest.endDate = this.oooForm.controls['dates'].value.end;
+    const now = new Date();
+    let beginDate = this.oooForm.controls['dates'].value.begin;
+    let endDate = this.oooForm.controls['dates'].value.end;
+    this.timeRequest.startDate = beginDate ? beginDate : now;
+    this.timeRequest.endDate = endDate ? endDate : now;
   }
 
   sendTimeRequest(form: FormGroup) {

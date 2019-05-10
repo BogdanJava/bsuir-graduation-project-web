@@ -7,9 +7,21 @@ export class TimeRequest extends BasicDocument {
               public startDate?: Date,
               public endDate?: Date,
               public description?: string,
-              public approved?: boolean,
+              public status?: RequestStatus,
               public approverId?: string) {
     super();
+  }
+
+  public isPending(): boolean {
+    return this.status == RequestStatus.Pending;
+  }
+
+  public isApproved(): boolean {
+    return this.status == RequestStatus.Approved;
+  }
+
+  public isDeclined(): boolean {
+    return this.status == RequestStatus.Declined;
   }
 
   public static getRequestTypeText(type: string): string {
@@ -35,6 +47,12 @@ export class TimeRequest extends BasicDocument {
     }
     return typeString;
   }
+}
+
+export enum RequestStatus {
+  Approved = 'APPROVED',
+  Declined = 'DECLINED',
+  Pending = 'PENDING'
 }
 
 export enum RequestType {

@@ -1,4 +1,5 @@
 import {BasicDocument} from './BasicDocument';
+import {RequestStatus} from './TimeRequest';
 
 export class WorktimeRequest extends BasicDocument {
   constructor(public id?: string,
@@ -9,7 +10,11 @@ export class WorktimeRequest extends BasicDocument {
               public description?: string,
               public projectId?: string,
               public approverId?: string,
-              public approved?: boolean) {
+              public status?: RequestStatus) {
     super();
+  }
+
+  public isPending(): boolean {
+    return this.status == RequestStatus.Pending;
   }
 }

@@ -59,8 +59,11 @@ export class TimeTrackerComponent implements OnInit {
   }
 
   setDatesToTimeRequest() {
-    this.worktimeRequest.startDate = this.worktimeRequestForm.controls['dates'].value.begin;
-    this.worktimeRequest.endDate = this.worktimeRequestForm.controls['dates'].value.end;
+    const now = new Date();
+    let beginDate = this.worktimeRequestForm.controls['dates'].value.begin;
+    let endDate = this.worktimeRequestForm.controls['dates'].value.end;
+    this.worktimeRequest.startDate = beginDate ? beginDate : now;
+    this.worktimeRequest.endDate = endDate ? endDate : now;
   }
 
   sendTimeRequest(form: FormGroup) {
