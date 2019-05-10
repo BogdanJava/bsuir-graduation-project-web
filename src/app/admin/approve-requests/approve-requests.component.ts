@@ -11,7 +11,6 @@ import {Project} from '../../model/Project';
 import {NotificationsService} from '../../notifications.service';
 import {DataFilter, FilterEntry, Operator, operatorName} from '../../model/DataFilter';
 import {MatExpansionPanel} from '@angular/material';
-import {ObjectUtils} from '../../model/ObjectUtils';
 
 @Component({
   selector: 'app-approve-requests',
@@ -48,15 +47,15 @@ export class ApproveRequestsComponent implements OnInit {
     this.clearData();
     this.timeRequestsLoading = true;
     this.timeRequestService.getByFilter(this.filter.toQueryObject()).subscribe(timeRequests => {
-      this.timeRequests = timeRequests.map(timeRequestRaw => ObjectUtils.getInstanceFromRawObject(timeRequestRaw, TimeRequest));
+      // todo this.timeRequests = timeRequests.map(timeRequestRaw => ObjectUtils.getInstanceFromRawObject(timeRequestRaw, TimeRequest));
       this.fetchUserRealNames(timeRequests.map(t => t.userId)).add(() => {
         this.timeRequestsUsersLoaded = true;
       });
     }).add(() => this.timeRequestsLoading = false);
     this.worktimeRequestsLoading = true;
     this.worktimeRequestService.getByFilter(this.filter.toQueryObject()).subscribe(worktimeRequests => {
-      this.worktimeRequests = worktimeRequests.map(worktimeRequestRaw =>
-        ObjectUtils.getInstanceFromRawObject(worktimeRequestRaw, WorktimeRequest));
+      // todo this.worktimeRequests = worktimeRequests.map(worktimeRequestRaw =>
+      // ObjectUtils.getInstanceFromRawObject(worktimeRequestRaw, WorktimeRequest));
       this.fetchUserRealNames(worktimeRequests.map(it => it.userId)).add(() => {
         this.worktimeRequestsUsersLoaded = true;
       });
