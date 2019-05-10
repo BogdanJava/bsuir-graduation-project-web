@@ -9,20 +9,21 @@ import {AuthenticationModule} from './authentication/authentication.module';
 import {HeaderComponent} from './header/header.component';
 import {SidenavListComponent} from './sidenav-list/sidenav-list.component';
 import {HttpClientModule} from '@angular/common/http';
-import { HomeComponent } from './home/home.component';
-import {MatMenuModule} from '@angular/material';
-import { ProfileComponent } from './profile/profile.component';
+import {HomeComponent} from './home/home.component';
+import {ProfileComponent} from './profile/profile.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { ContactInfoComponent } from './profile/contact-info/contact-info.component';
-import { SecuritySettingsComponent } from './profile/security/security-settings.component';
-import { PasswordComponent } from './profile/security/password/password.component';
-import { CalendarComponent } from './calendar/calendar.component';
-import { OutOfOfficeComponent } from './calendar/out-of-office/out-of-office.component';
-import { TimeTrackerComponent } from './calendar/time-tracker/time-tracker.component';
-import { OtherRequestsComponent } from './calendar/other-requests/other-requests.component';
+import {ContactInfoComponent} from './profile/contact-info/contact-info.component';
+import {SecuritySettingsComponent} from './profile/security/security-settings.component';
+import {PasswordComponent} from './profile/security/password/password.component';
+import {CalendarComponent} from './calendar/calendar.component';
+import {OutOfOfficeComponent} from './calendar/out-of-office/out-of-office.component';
+import {TimeTrackerComponent} from './calendar/time-tracker/time-tracker.component';
+import {OtherRequestsComponent} from './calendar/other-requests/other-requests.component';
 import {AdminModule} from './admin/admin.module';
-import { TimelineComponent } from './timeline/timeline.component';
-import { HelpComponent } from './help/help.component';
+import {TimelineComponent} from './timeline/timeline.component';
+import {HelpComponent} from './help/help.component';
+import {TasksComponent} from './tasks/tasks.component';
+import {UserTableComponent} from './admin/users/user-table/user-table.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { HelpComponent } from './help/help.component';
     TimeTrackerComponent,
     OtherRequestsComponent,
     TimelineComponent,
-    HelpComponent
+    HelpComponent,
+    TasksComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +55,7 @@ import { HelpComponent } from './help/help.component';
     AdminModule
   ],
   providers: [],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

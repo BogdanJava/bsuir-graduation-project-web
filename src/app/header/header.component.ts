@@ -6,8 +6,8 @@ import {TabItem} from '../model/TabItem';
 import {NotificationsService} from '../notifications.service';
 import {TimeRequestService} from '../time-request.service';
 import {WorktimeRequestService} from '../worktime.service';
-import {merge, Observable} from 'rxjs';
-import {IconRef} from '../model/IconRef';
+import {merge} from 'rxjs';
+import {TaskStatus} from '../model/TaskStatus';
 
 @Component({
   selector: 'app-header',
@@ -67,7 +67,7 @@ export class HeaderComponent implements OnInit {
       this.userService.getUnreadMessagesCount(username).subscribe(count => {
         this.unreadMessagesCount = count;
       });
-      this.userService.getPendingTasksCount(username).subscribe(count => {
+      this.userService.getPendingTasksCount(UserService.getCurrentUserId(), TaskStatus.Open).subscribe(count => {
         this.pendingTasksCount = count;
       });
       const timeRequestsCountObservable = this.timeRequestService.getUnapprovedRequestsCount(UserService.getCurrentUserId());

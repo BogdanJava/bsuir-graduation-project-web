@@ -1,5 +1,4 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {DataFilter} from './model/DataFilter';
 
 export abstract class AbstractHttpService<T> {
   protected constructor(protected httpClient: HttpClient) {

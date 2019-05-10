@@ -16,6 +16,7 @@ export class SidenavListComponent implements OnInit {
   public authenticatedUserTabs = [
     new TabItem('Timeline', 'timeline', 'timeline'),
     new TabItem('Calendar', 'event_note', 'calendar'),
+    new TabItem('Tasks', 'assignment', 'tasks'),
     new TabItem('Help', 'help', 'help'),
     new TabItem('Logout', 'exit_to_app', 'login', () => {
       this.authenticationService.logout();

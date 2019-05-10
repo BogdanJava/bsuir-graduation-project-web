@@ -12,7 +12,7 @@ import {
   MatInputModule,
   MatListModule,
   MatMenuModule,
-  MatNativeDateModule,
+  MatNativeDateModule, MatPaginatorModule,
   MatProgressSpinnerModule,
   MatSelectModule,
   MatSidenavModule,
@@ -47,7 +47,8 @@ import {SatDatepickerModule, SatNativeDateModule} from 'saturn-datepicker';
     SatNativeDateModule,
     MatSelectModule,
     MatMenuModule,
-    MatChipsModule
+    MatChipsModule,
+    MatPaginatorModule
   ],
   exports: [
     MatSidenavModule,
@@ -70,7 +71,8 @@ import {SatDatepickerModule, SatNativeDateModule} from 'saturn-datepicker';
     SatNativeDateModule,
     MatSelectModule,
     MatMenuModule,
-    MatChipsModule
+    MatChipsModule,
+    MatPaginatorModule
   ]
 })
 export class MaterialModule {

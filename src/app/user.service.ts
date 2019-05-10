@@ -5,6 +5,7 @@ import {API_URL} from './constants';
 import {UpdateUserDTO, User, UserPublicInfo} from './model/User';
 import {AuthenticationService} from './authentication/authentication.service';
 import {AbstractHttpService} from './abstract-http.service';
+import {TaskStatus} from './model/TaskStatus';
 
 @Injectable({
   providedIn: 'root'
@@ -45,9 +46,9 @@ export class UserService extends AbstractHttpService<User> {
     );
   }
 
-  public getPendingTasksCount(username: string): Observable<number> {
+  public getPendingTasksCount(assigneeId: string, status: TaskStatus): Observable<number> {
     return this.httpClient.get<number>(
-      `${API_URL}/tasks/count?username=${username}&pending=1`,
+      `${API_URL}/tasks/count/${assigneeId}?status=${status}`,
       {
         headers: AbstractHttpService.getHeaders()
       }
