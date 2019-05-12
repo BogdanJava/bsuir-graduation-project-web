@@ -15,11 +15,16 @@ export abstract class AbstractHttpService<T> {
     return `Bearer ${token}`;
   }
 
-  public getByFilter(filter: object, projection?: string[]) {
+  public getByFilter(filter: object,
+                     projection?: string[],
+                     pageNumber: number = 0,
+                     pageSize: number = 100) {
     let filterEncoded = encodeURIComponent(JSON.stringify({filter: filter}));
     let projectionEncoded = projection ? encodeURIComponent(JSON.stringify(projection)) : null;
+    let pagination = encodeURI(`pageSize=${pageSize}&pageNumber=${pageNumber}`);
     return this.httpClient.get<T[]>(`${this.getFilterEndpoint()}?filter=${filterEncoded}
-    ${projectionEncoded ? `&projection=${projectionEncoded}` : ''}`, {
+    ${projectionEncoded ? `&projection=${projectionEncoded}` : ''}
+    &${pagination}`, {
       headers: AbstractHttpService.getHeaders()
     });
   }

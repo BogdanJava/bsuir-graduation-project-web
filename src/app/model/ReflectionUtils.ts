@@ -7,4 +7,13 @@ export class ReflectionUtils {
     });
     return copy;
   }
+
+
+  public static getInstanceFromRawObject<T>(rawObject: any, type: { new(): T }): T {
+    const obj = new type();
+    for (let key of Object.keys(rawObject)) {
+      obj[key] = rawObject[key];
+    }
+    return obj;
+  }
 }

@@ -106,10 +106,10 @@
         </button>
       </mat-card-actions>
       <div class="approved" *ngIf="timeRequest.isApproved()">
-        approved
+        Request has been approved
       </div>
-      <div class="approved" *ngIf="timeRequest.isDeclined()">
-        declined
+      <div class="declined" *ngIf="timeRequest.isDeclined()">
+        Request has been declined
       </div>
     </mat-card>
   </div>
@@ -156,7 +156,7 @@
           </div>
         </div>
       </mat-card-content>
-      <mat-card-actions align="center">
+      <mat-card-actions align="center" *ngIf="worktimeRequest.isPending()">
         <button mat-stroked-button color="primary" (click)="processWorktimeRequest(worktimeRequest.id, true)">
           Approve
           <mat-icon>check_circle_outline</mat-icon>
@@ -166,6 +166,12 @@
           <mat-icon>cancel</mat-icon>
         </button>
       </mat-card-actions>
+      <div class="approved" *ngIf="worktimeRequest.isApproved()">
+        Request has been approved
+      </div>
+      <div class="declined" *ngIf="worktimeRequest.isDeclined()">
+        Request has been declined
+      </div>
     </mat-card>
   </div>
 </section>

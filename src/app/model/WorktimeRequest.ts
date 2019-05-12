@@ -14,6 +14,14 @@ export class WorktimeRequest extends BasicDocument {
     super();
   }
 
+  public isApproved(): boolean {
+    return this.status == RequestStatus.Approved;
+  }
+
+  public isDeclined(): boolean {
+    return this.status == RequestStatus.Declined;
+  }
+
   public isPending(): boolean {
     return this.status == RequestStatus.Pending;
   }

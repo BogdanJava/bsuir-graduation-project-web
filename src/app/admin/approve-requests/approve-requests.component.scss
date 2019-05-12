@@ -57,9 +57,26 @@ mat-form-field {
   color: rgba(0, 0, 0, 0.54);
 }
 
+.approved, .declined {
+  text-align: center;
+  padding: 5px 20px;
+  border-radius: 8px;
+}
+
 @mixin approve-requests-elements($theme) {
   $accent: map_get($theme, accent);
   $primary: map_get($theme, primary);
+  $warn: map_get($theme, warn);
+
+  .approved {
+    background-color: mat-color($primary, lighter);
+    color: mat-color($primary, lighter-contrast);
+  }
+
+  .declined {
+    background-color: mat-color($warn, lighter);
+    color: mat-color($warn, lighter-contrast);
+  }
 
   .request-created-date {
     margin-left: auto;

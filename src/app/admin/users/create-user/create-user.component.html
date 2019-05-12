@@ -1,3 +1,103 @@
-<p>
-  create-user works!
-</p>
+<mat-card class="user-info-card">
+  <h2 class="mat-h2">Create a new user</h2>
+  <mat-divider></mat-divider>
+
+  <div class="profile-form-container" *ngIf="createUserForm">
+    <form class="profile-form" (ngSubmit)="createUser(createUserForm)" [formGroup]="createUserForm">
+      <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input
+          name="username"
+          matInput
+          formControlName="username"
+          placeholder="alex.ivanov1999"
+        />
+        <mat-error *ngIf="createUserForm.controls['username'].hasError('usernameAlreadyExists')">
+          Username already exists
+        </mat-error>
+        <mat-error *ngIf="createUserForm.controls['username'].hasError('required')">
+          Field must not be null
+        </mat-error>
+        <mat-hint>Enter your username</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input
+          #password [type]="hidePassword ? 'password' : 'text'"
+          name="password"
+          matInput
+          formControlName="password"
+        />
+        <mat-error *ngIf="createUserForm.controls['password'].hasError('required')">
+          Field must not be null
+        </mat-error>
+        <mat-icon matSuffix
+                  (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        <mat-hint>Enter a password</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Full name</mat-label>
+        <input
+          name="realName"
+          matInput
+          formControlName="realName"
+          placeholder="Alex Ivanov"
+        />
+        <mat-hint>Enter your real full name</mat-hint>
+      </mat-form-field>
+
+
+      <mat-form-field class="roles">
+        <mat-chip-list #rolesList formControlName="roles">
+          <mat-chip
+            [ngClass]="getClassForRole(role)"
+            *ngFor="let role of user.roles"
+            [selectable]="true"
+            [removable]="true"
+            (removed)="removeRole(role)">
+            {{role}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          <input
+            #roleInput
+            (input)="filterRoles($event)"
+            placeholder="Roles"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="rolesList"
+            [matChipInputSeparatorKeyCodes]="separatorsList"
+            [matChipInputAddOnBlur]="true">
+        </mat-chip-list>
+        <mat-error *ngIf="createUserForm.controls['roles'].hasError('empty')">
+          User must have at least 1 role
+        </mat-error>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let role of filteredRoles" [value]="role">
+            {{role}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <div class="buttons-container">
+        <button type="submit" mat-raised-button color="primary">
+          Save
+          <mat-icon>save</mat-icon>
+        </button>
+
+        <button
+          type="button"
+          mat-raised-button
+          color="warn"
+          (click)="discardChanges()">
+          Discard
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </div>
+    </form>
+    <div class="profile-photo-container">
+      <img src="http://www.mhcsa.org.au/wp-content/uploads/2016/08/default-non-user-no-photo.jpg"
+           alt="User photo"/>
+    </div>
+  </div>
+</mat-card>

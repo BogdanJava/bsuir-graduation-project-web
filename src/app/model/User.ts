@@ -11,6 +11,7 @@ export class UserPublicInfo {
 export class User extends BasicDocument {
   constructor(public id: string,
               public username: string,
+              public password?: string,
               public photoUrl?: string,
               public realName?: string,
               public birthday?: Date | number,
@@ -42,3 +43,4 @@ export class UpdateUserDTO {
 export enum Role {
   Admin = "ADMIN", User = "USER", Moderator = "MODERATOR"
 }
+

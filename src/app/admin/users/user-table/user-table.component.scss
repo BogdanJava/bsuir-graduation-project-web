@@ -14,8 +14,13 @@ table {
   width: 100%;
 }
 
-td > * {
-  padding: 10px 0;
+td > mat-icon {
+  margin-right: 5px;
+}
+
+td {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
 }
 
 tr:not(.mat-header-row) {
@@ -43,4 +48,21 @@ tr:not(.mat-header-row):hover {
 
 .user-photo {
   border-radius: 25px;
+}
+
+.moderator, .user, .admin {
+  border-radius: 15px;
+  padding: 1px;
+}
+
+.moderator {
+  background: rgba(255, 235, 59, 0.36);
+}
+
+.user {
+  background: rgba(0, 38, 255, 0.36);
+}
+
+.admin {
+  background: rgba(0, 128, 0, 0.36);
 }

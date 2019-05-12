@@ -40,8 +40,7 @@ export class ContactInfoComponent implements OnInit {
     this.userService
       .updateUser(
         UserService.getCurrentUserId(),
-        UpdateUserDTO.fromUser(this.user)
-      )
+        UpdateUserDTO.fromUser(this.user))
       .subscribe(user => {
         user.birthday = new Date(user.birthday);
         this.source = ReflectionUtils.getObjectCopy(user);

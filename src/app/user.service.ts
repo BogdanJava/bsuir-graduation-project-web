@@ -64,4 +64,22 @@ export class UserService extends AbstractHttpService<User> {
   protected getFilterEndpoint(): string {
     return `${API_URL}/users/filter`;
   }
+
+  getUsersCount(): Observable<number> {
+    return this.httpClient.get<number>(`${API_URL}/users/count`, {
+      headers: AbstractHttpService.getHeaders()
+    });
+  }
+
+  checkUsernameExists(username: string) {
+    return this.httpClient.get<boolean>(`${API_URL}/users/exists?username=${username}`, {
+      headers: AbstractHttpService.getHeaders()
+    });
+  }
+
+  createUser(user: User): Observable<User> {
+    return this.httpClient.post<User>(`${API_URL}/users`, user, {
+      headers: AbstractHttpService.getHeaders()
+    });
+  }
 }

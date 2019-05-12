@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {TimeRequest} from '../../model/TimeRequest';
+import {RequestStatus, TimeRequest} from '../../model/TimeRequest';
 import {WorktimeRequest} from '../../model/WorktimeRequest';
 import {TimeRequestService} from '../../time-request.service';
 import {WorktimeRequestService} from '../../worktime.service';
@@ -11,6 +11,7 @@ import {Project} from '../../model/Project';
 import {NotificationsService} from '../../notifications.service';
 import {DataFilter, FilterEntry, Operator, operatorName} from '../../model/DataFilter';
 import {MatExpansionPanel} from '@angular/material';
+import {ReflectionUtils} from '../../model/ReflectionUtils';
 
 @Component({
   selector: 'app-approve-requests',
@@ -47,15 +48,15 @@ export class ApproveRequestsComponent implements OnInit {
     this.clearData();
     this.timeRequestsLoading = true;
     this.timeRequestService.getByFilter(this.filter.toQueryObject()).subscribe(timeRequests => {
-      // todo this.timeRequests = timeRequests.map(timeRequestRaw => ObjectUtils.getInstanceFromRawObject(timeRequestRaw, TimeRequest));
+      this.timeRequests = timeRequests.map(timeRequestRaw => ReflectionUtils.getInstanceFromRawObject(timeRequestRaw, TimeRequest));
       this.fetchUserRealNames(timeRequests.map(t => t.userId)).add(() => {
         this.timeRequestsUsersLoaded = true;
       });
     }).add(() => this.timeRequestsLoading = false);
     this.worktimeRequestsLoading = true;
     this.worktimeRequestService.getByFilter(this.filter.toQueryObject()).subscribe(worktimeRequests => {
-      // todo this.worktimeRequests = worktimeRequests.map(worktimeRequestRaw =>
-      // ObjectUtils.getInstanceFromRawObject(worktimeRequestRaw, WorktimeRequest));
+      this.worktimeRequests = worktimeRequests.map(worktimeRequestRaw =>
+        ReflectionUtils.getInstanceFromRawObject(worktimeRequestRaw, WorktimeRequest));
       this.fetchUserRealNames(worktimeRequests.map(it => it.userId)).add(() => {
         this.worktimeRequestsUsersLoaded = true;
       });
@@ -68,9 +69,7 @@ export class ApproveRequestsComponent implements OnInit {
   ngOnInit() {
     const currentUserId = UserService.getCurrentUserId();
     this.filter.add(new FilterEntry('approverId', Operator.EQ, currentUserId));
-    if (this.status != 'ANY') {
-      this.filter.add(new FilterEntry('status', Operator.EQ, this.status));
-    }
+    this.setFilterValues();
     this.load();
   }
 
@@ -131,9 +130,7 @@ export class ApproveRequestsComponent implements OnInit {
   }
 
   applyFilter(filterPanel: MatExpansionPanel) {
-    if (this.status && this.status != 'ANY') {
-      this.filter.add(new FilterEntry('status', Operator.EQ, this.status));
-    }
+    this.setFilterValues();
     filterPanel.close();
     this.load();
   }
@@ -155,5 +152,13 @@ export class ApproveRequestsComponent implements OnInit {
     this.worktimeRequestsUsersLoaded = false;
     this.timeRequestsUsersLoaded = false;
     this.projectsLoaded = false;
+  }
+
+  private setFilterValues() {
+    if (this.status && this.status != 'ANY') {
+      this.filter.add(new FilterEntry('status', Operator.EQ, this.status));
+    } else {
+      this.filter.remove(this.filter.getFilterList().find(e => e.field === 'status'));
+    }
   }
 }

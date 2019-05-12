@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
+  MatAutocompleteModule,
   MatBadgeModule,
   MatButtonModule,
   MatCardModule,
@@ -48,7 +49,8 @@ import {SatDatepickerModule, SatNativeDateModule} from 'saturn-datepicker';
     MatSelectModule,
     MatMenuModule,
     MatChipsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatAutocompleteModule
   ],
   exports: [
     MatSidenavModule,
@@ -72,7 +74,8 @@ import {SatDatepickerModule, SatNativeDateModule} from 'saturn-datepicker';
     MatSelectModule,
     MatMenuModule,
     MatChipsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatAutocompleteModule
   ]
 })
 export class MaterialModule {

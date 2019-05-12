@@ -2,7 +2,7 @@
   <mat-paginator [length]="tableParams.length"
                  [pageSize]="tableParams.pageSize"
                  [pageSizeOptions]="tableParams.pageSizeOptions"
-                 (page)="tableParams.pageEvent = $event">
+                 (page)="processChangeEvent($event)">
   </mat-paginator>
 
   <table mat-table [dataSource]="users">
@@ -27,6 +27,15 @@
       <th mat-header-cell *matHeaderCellDef>Username</th>
       <td mat-cell *matCellDef="let user">
         {{user.username}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="roles">
+      <th mat-header-cell *matHeaderCellDef>Roles</th>
+      <td mat-cell *matCellDef="let user">
+        <mat-icon class="moderator" *ngIf="findUserRole(user, 'MODERATOR')" title="Moderator">edit</mat-icon>
+        <mat-icon class="user" *ngIf="findUserRole(user, 'USER')" title="User">perm_identity</mat-icon>
+        <mat-icon class="admin" *ngIf="findUserRole(user, 'ADMIN')" title="Admin">supervisor_account</mat-icon>
       </td>
     </ng-container>
 
