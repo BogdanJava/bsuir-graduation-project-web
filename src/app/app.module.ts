@@ -23,7 +23,6 @@ import {AdminModule} from './admin/admin.module';
 import {TimelineComponent} from './timeline/timeline.component';
 import {HelpComponent} from './help/help.component';
 import {TasksComponent} from './tasks/tasks.component';
-import {UserTableComponent} from './admin/users/user-table/user-table.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +54,8 @@ import {UserTableComponent} from './admin/users/user-table/user-table.component'
     AdminModule
   ],
   providers: [],
-  exports: [],
+  exports: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

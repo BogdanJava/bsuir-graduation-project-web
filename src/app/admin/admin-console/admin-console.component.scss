@@ -43,11 +43,12 @@
 }
 
 .card-link {
-  text-decoration: none ;
+  text-decoration: none;
 }
 
 .cards-container {
   padding: 30px;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }

@@ -9,17 +9,20 @@ export class UserPublicInfo {
 }
 
 export class User extends BasicDocument {
-  constructor(public id: string,
-              public username: string,
+  constructor(public id?: string,
+              public username?: string,
               public password?: string,
               public photoUrl?: string,
               public realName?: string,
               public birthday?: Date | number,
               public address?: string,
+              public projectIds?: string[],
               public department?: Department,
               public roles?: Role[]) {
     super();
   }
+
+
 }
 
 export class UpdateUserDTO {
@@ -27,6 +30,7 @@ export class UpdateUserDTO {
               public birthday?: Date | number,
               public address?: string,
               public department?: Department,
+              public projectIds?: string[],
               public photoUrl?: string) {
   }
 

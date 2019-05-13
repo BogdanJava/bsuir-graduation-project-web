@@ -53,10 +53,10 @@
   </mat-expansion-panel>
 
   <mat-chip-list class="filter-entries">
-    <mat-chip *ngFor="let entry of filter.getFilterList()" removable="true"
+    <mat-chip *ngFor="let entry of filter.getFilterList()" [removable]="entry.field != 'approverId'"
               (removed)="removeFilterEntry(entry)">
       {{entry.field}} {{operatorName(entry.operator)}} {{entry.value}}
-      <mat-icon matChipRemove>cancel</mat-icon>
+      <mat-icon matChipRemove *ngIf="entry.field != 'approverId'">cancel</mat-icon>
     </mat-chip>
   </mat-chip-list>
 

@@ -1,0 +1,82 @@
+.table-container {
+  width: 95%;
+  margin: 20px auto 20px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+  0px 8px 10px 1px rgba(0, 0, 0, 0.14),
+  0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+mat-paginator {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+table {
+  width: 100%;
+}
+
+td > mat-icon {
+  margin-right: 5px;
+}
+
+td {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+tr:not(.mat-header-row) {
+  cursor: pointer;
+}
+
+tr:not(.mat-header-row):hover {
+  background-color: #f5f5f5;
+}
+
+.user-photo {
+  width: 40px;
+  height: 40px;
+}
+
+.user-photo-name-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.user-name {
+  align-self: center;
+  margin-left: 10px;
+}
+
+.user-photo {
+  border-radius: 25px;
+}
+
+.moderator, .user, .admin {
+  border-radius: 15px;
+  padding: 1px;
+}
+
+.moderator {
+  background: rgba(255, 235, 59, 0.36);
+}
+
+.user {
+  background: rgba(0, 38, 255, 0.36);
+}
+
+.admin {
+  background: rgba(0, 128, 0, 0.36);
+}
+
+.person-avatar {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: cover;
+  margin-right: 5px;
+}
+
+.assigned-persons-avatars-container {
+  display: flex;
+  align-items: center;
+}

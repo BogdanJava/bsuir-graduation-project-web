@@ -2,7 +2,8 @@
   <h2 class="mat-h2">Worktime tracking</h2>
   <mat-divider></mat-divider>
 
-  <form class="default-form worktime-form" [formGroup]="worktimeRequestForm" (ngSubmit)="sendTimeRequest(worktimeRequestForm)">
+  <form class="default-form worktime-form" [formGroup]="worktimeRequestForm"
+        (ngSubmit)="sendTimeRequest(worktimeRequestForm)">
     <mat-form-field>
       <input matInput
              formControlName="dates"
@@ -16,8 +17,8 @@
 
     <mat-form-field>
       <input formControlName="hours" name="hours" type="number"
-                [(ngModel)]="worktimeRequest.hours" matInput
-                placeholder="Number of hours per day"/>
+             [(ngModel)]="worktimeRequest.hours" matInput
+             placeholder="Number of hours per day"/>
       <mat-error *ngIf="hasError('hours', 'invalidHoursNumber')">Hours number must be between 1 and 24</mat-error>
     </mat-form-field>
 
@@ -25,15 +26,16 @@
 
     <mat-form-field *ngIf="reviewers">
       <mat-label>Select a reviewer</mat-label>
-      <mat-select formControlName="reviewer" [(value)]="worktimeRequest.approverId" *ngFor="let reviewer of reviewers">
-        <mat-option [value]="reviewer.id" [innerText]="reviewer.realName ? reviewer.realName : reviewer.username"></mat-option>
+      <mat-select formControlName="reviewer" [(value)]="worktimeRequest.approverId">
+        <mat-option *ngFor="let reviewer of reviewers" [value]="reviewer.id"
+                    [innerText]="reviewer.realName ? reviewer.realName : reviewer.username"></mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field *ngIf="projects">
       <mat-label>Select a project you are working on</mat-label>
-      <mat-select formControlName="project" [(value)]="worktimeRequest.projectId" *ngFor="let project of projects">
-        <mat-option [value]="project.id" [innerText]="project.name"></mat-option>
+      <mat-select formControlName="project" [(value)]="worktimeRequest.projectId">
+        <mat-option *ngFor="let project of projects" [value]="project.id" [innerText]="project.name"></mat-option>
       </mat-select>
     </mat-form-field>
 

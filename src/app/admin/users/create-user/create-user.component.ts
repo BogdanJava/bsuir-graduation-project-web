@@ -4,7 +4,7 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material';
 import {UserService} from '../../../user.service';
 import {NotificationsService} from '../../../notifications.service';
-import {AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
+import {AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidationErrors,  Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-create-user',

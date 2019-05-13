@@ -13,7 +13,7 @@ import {TimeTrackerComponent} from './calendar/time-tracker/time-tracker.compone
 import {OtherRequestsComponent} from './calendar/other-requests/other-requests.component';
 import {ApproveRequestsComponent} from './admin/approve-requests/approve-requests.component';
 import {ManageUsersComponent} from './admin/users/manage-users.component';
-import {ProjectsComponent} from './projects/projects.component';
+import {ProjectsComponent} from './admin/projects/projects.component';
 import {AdminConsoleWrapperComponent} from './admin/admin-console-wrapper/admin-console-wrapper.component';
 import {TimelineComponent} from './timeline/timeline.component';
 import {AdminConsoleComponent} from './admin/admin-console/admin-console.component';

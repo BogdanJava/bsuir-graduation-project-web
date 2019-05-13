@@ -1,0 +1,68 @@
+.user-info-card {
+  width: 80%;
+  margin: 30px auto;
+}
+
+.project-form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 5;
+}
+
+.project-form mat-form-field {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.project-form-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.project-photo-container {
+  flex-grow: 1;
+}
+
+.project-photo-container img {
+  max-width: 301px;
+  min-height: 300px;
+  margin: 0 auto;
+  display: block;
+  object-fit: cover;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.buttons-container button {
+  margin-left: 5px;
+}
+
+.moderator {
+  background-color: rgba(255, 235, 59, 0.36);
+}
+
+.user {
+  background-color: rgba(0, 38, 255, 0.36);
+}
+
+.admin {
+  background-color: rgba(0, 128, 0, 0.36);
+}
+
+.person-avatar {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: cover;
+  margin-right: 5px;
+}
+
+mat-chip {
+  display: flex;
+  align-items: center;
+}

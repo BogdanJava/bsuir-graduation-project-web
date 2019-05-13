@@ -1,0 +1,98 @@
+<mat-card class="user-info-card">
+  <h2 class="mat-h2">Create a new project</h2>
+  <mat-divider></mat-divider>
+
+  <div class="project-form-container" *ngIf="createProjectForm">
+    <form class="project-form" (ngSubmit)="createProject(createProjectForm)" [formGroup]="createProjectForm">
+      <mat-form-field>
+        <mat-label>Project name</mat-label>
+        <input
+          name="projectName"
+          matInput
+          formControlName="projectName"
+          placeholder="Project name"
+        />
+        <mat-error *ngIf="createProjectForm.controls['projectName'].hasError('projectAlreadyExists')">
+          Project already exists
+        </mat-error>
+        <mat-error *ngIf="createProjectForm.controls['projectName'].hasError('required')">
+          Field must not be null
+        </mat-error>
+        <mat-hint>Enter project name</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Project photo URL</mat-label>
+        <input
+          name="projectPhotoUrl"
+          matInput
+          formControlName="projectPhotoUrl"
+          placeholder="Project photo URL">
+        <mat-hint>Insert photo URL</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Project description</mat-label>
+        <input
+          name="projectDescription"
+          matInput
+          formControlName="projectDescription"
+          placeholder="Project description">
+        <mat-hint>Enter project description</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Assigned persons</mat-label>
+        <mat-chip-list #assignedPersonsList>
+          <mat-chip
+            *ngFor="let person of addedPersons"
+            selectable="true"
+            removable="true"
+            (removed)="removeAssignedPerson(person)">
+            <div class="person-avatar" [ngStyle]="configureUserAvatar(person)">
+            </div>
+            <span [innerText]="person.realName">
+            </span>
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          <input
+            #lookupPersonInput
+            (input)="updateLoadedPersons(lookupPersonInput.value)"
+            [formControl]="assignedPersons"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="assignedPersonsList"
+            [matChipInputSeparatorKeyCodes]="separators">
+        </mat-chip-list>
+        <mat-autocomplete #auto='matAutocomplete' (optionSelected)="personSelected($event)">
+          <mat-option *ngFor="let person of loadedPersons" [value]="person">
+            {{person.realName}}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-hint>Add assigned persons</mat-hint>
+      </mat-form-field>
+
+
+      <div class="buttons-container">
+        <button type="submit" mat-raised-button color="primary">
+          Save
+          <mat-icon>save</mat-icon>
+        </button>
+
+        <button
+          type="button"
+          mat-raised-button
+          color="warn"
+          (click)="discardChanges()">
+          Discard
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </div>
+    </form>
+    <div class="project-photo-container">
+      <img
+        [src]="createProjectForm.controls['projectPhotoUrl'].value ?
+        createProjectForm.controls['projectPhotoUrl'].value : defaultPhoto"
+        alt="Project photo"/>
+    </div>
+  </div>
+</mat-card>
