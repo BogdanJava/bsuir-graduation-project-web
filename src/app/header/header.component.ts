@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {User} from '../model/User';
 import {UserService} from '../user.service';
 import {AuthenticationService} from '../authentication/authentication.service';
@@ -8,13 +8,16 @@ import {TimeRequestService} from '../time-request.service';
 import {WorktimeRequestService} from '../worktime.service';
 import {merge} from 'rxjs';
 import {TaskStatus} from '../model/TaskStatus';
+import {NotificationsWebsocketService} from '../abstract-websocket.service';
+import {ReflectionUtils} from '../model/ReflectionUtils';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
+  private webSocketSubject = this.notificationsWebSocketService.getSubject();
   public user: User;
   public unreadMessagesCount: number = null;
   public pendingTasksCount: number = null;
@@ -40,10 +43,28 @@ export class HeaderComponent implements OnInit {
               private timeRequestService: TimeRequestService,
               private worktimeRequestService: WorktimeRequestService,
               private authService: AuthenticationService,
-              private notifications: NotificationsService) {
+              private notifications: NotificationsService,
+              private notificationsWebSocketService: NotificationsWebsocketService) {
+  }
+
+  ngOnDestroy(): void {
+    this.webSocketSubject.unsubscribe();
   }
 
   ngOnInit() {
+    this.webSocketSubject.subscribe(event => {
+      console.log(event);
+      const source = event['source'];
+      if (source['className'] === 'WorktimeRequest' || source['className'] === 'TimeRequest') {
+        this.timeRequestsCount = null;
+        this.loadTimeRequestsCount();
+      }
+      if (source['className'] === 'UserDocument') {
+        if (source['type'] === 'UPDATE') {
+          this.user = ReflectionUtils.getInstanceFromRawObject(source['obj'], User);
+        }
+      }
+    });
     this.fetchUser();
     this.authService.userState.subscribe(user => {
       if (user) {
@@ -70,15 +91,7 @@ export class HeaderComponent implements OnInit {
       this.userService.getPendingTasksCount(UserService.getCurrentUserId(), TaskStatus.Open).subscribe(count => {
         this.pendingTasksCount = count;
       });
-      const timeRequestsCountObservable = this.timeRequestService.getUnapprovedRequestsCount(UserService.getCurrentUserId());
-      const worktimeRequestsCountObservable = this.worktimeRequestService.getUnapprovedRequestsCount(UserService.getCurrentUserId());
-      merge(timeRequestsCountObservable, worktimeRequestsCountObservable).subscribe(result => {
-        if (this.timeRequestsCount == null) {
-          this.timeRequestsCount = result;
-        } else {
-          this.timeRequestsCount += result;
-        }
-      });
+      this.loadTimeRequestsCount();
     } else {
       this.unsetAll();
     }
@@ -89,5 +102,17 @@ export class HeaderComponent implements OnInit {
     this.unreadMessagesCount = null;
     this.pendingTasksCount = null;
     this.timeRequestsCount = null;
+  }
+
+  private loadTimeRequestsCount() {
+    const timeRequestsCountObservable = this.timeRequestService.getUnapprovedRequestsCount(UserService.getCurrentUserId());
+    const worktimeRequestsCountObservable = this.worktimeRequestService.getUnapprovedRequestsCount(UserService.getCurrentUserId());
+    merge(timeRequestsCountObservable, worktimeRequestsCountObservable).subscribe(result => {
+      if (this.timeRequestsCount == null) {
+        this.timeRequestsCount = result;
+      } else {
+        this.timeRequestsCount += result;
+      }
+    });
   }
 }

@@ -73,7 +73,6 @@ export class ApproveRequestsComponent implements OnInit {
     this.load();
   }
 
-
   fetchUserRealNames(userIds: string[]): Subscription {
     return this.userService.getByFilter({id: {operator: 'IN', value: userIds}},
       ['id', 'realName', 'photoUrl']).subscribe(users => {

@@ -6,7 +6,6 @@ import {API_URL} from '../constants';
 import {Router} from '@angular/router';
 import * as jwtDecode from 'jwt-decode';
 import {User} from '../model/User';
-import {UserService} from '../user.service';
 import {AbstractHttpService} from '../abstract-http.service';
 
 @Injectable({
@@ -101,5 +100,9 @@ export class AuthenticationService {
         }
       }
     );
+  }
+
+  static getToken() {
+    return localStorage.getItem('access_token');
   }
 }
