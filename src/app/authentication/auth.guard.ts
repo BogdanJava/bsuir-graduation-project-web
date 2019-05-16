@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (AuthenticationService.isTokenExpired()) {
       this.router.navigateByUrl('/login');
-      this.notificationsService.pushNotification('Session has expired');
+      this.notificationsService.alert('Session has expired');
       return false;
     } else {
       return true;

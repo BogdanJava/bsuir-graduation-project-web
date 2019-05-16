@@ -51,7 +51,7 @@ export class AuthenticationComponent implements OnInit {
         AuthenticationService.setAccessToken(token);
         if (token && token.accessToken) {
           this.authService.setUser(new User(null, username, null));
-          this.notifications.pushNotification('Authenticated');
+          this.notifications.alert('Authenticated');
           this.router.navigateByUrl('/home');
         }
       }, err => {

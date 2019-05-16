@@ -46,7 +46,7 @@ export class CreateProjectComponent implements OnInit {
     if (this.controlsValid(createProjectForm)) {
       this.fillProject();
       this.projectService.createProject(this.project).subscribe(project => {
-        this.notifications.pushNotification(`Project '${project.name}' created`);
+        this.notifications.alert(`Project '${project.name}' created`);
       });
     }
   }

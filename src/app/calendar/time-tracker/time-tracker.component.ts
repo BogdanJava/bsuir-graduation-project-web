@@ -70,7 +70,7 @@ export class TimeTrackerComponent implements OnInit {
     if (!form.errors) {
       this.worktimeRequestService.create(this.worktimeRequest).subscribe(result => {
         console.log(result);
-        this.notifications.pushNotification('Worktime has been logged');
+        this.notifications.alert('Worktime has been logged');
       });
     }
   }

@@ -60,7 +60,7 @@ export class OutOfOfficeComponent implements OnInit {
     if (!form.errors) {
       this.timeRequestService.create(this.timeRequest).subscribe(result => {
         console.log(result);
-        this.notifications.pushNotification('Time request created');
+        this.notifications.alert('Time request created');
       });
     }
   }

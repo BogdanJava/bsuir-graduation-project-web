@@ -37,6 +37,12 @@ export class UserService extends AbstractHttpService<User> {
     });
   }
 
+  public getUserById(userId: string): Observable<User> {
+    return this.httpClient.get<User>(`${API_URL}/users/${userId}`, {
+      headers: AbstractHttpService.getHeaders()
+    });
+  }
+
   public getUnreadMessagesCount(username: string): Observable<number> {
     return this.httpClient.get<number>(
       `${API_URL}/messages/count?username=${username}&read=0`,

@@ -10,6 +10,10 @@ import {merge} from 'rxjs';
 import {TaskStatus} from '../model/TaskStatus';
 import {NotificationsWebsocketService} from '../abstract-websocket.service';
 import {ReflectionUtils} from '../model/ReflectionUtils';
+import {NotificationType} from 'angular2-notifications';
+import {WorktimeRequest} from '../model/WorktimeRequest';
+import {TimeRequest} from '../model/TimeRequest';
+import {DatePipe,} from '@angular/common';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +21,7 @@ import {ReflectionUtils} from '../model/ReflectionUtils';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  private webSocketSubject = this.notificationsWebSocketService.getSubject();
+  private webSocketSubjectWrapper = this.notificationsWebSocketService.getSubjectWrapper();
   public user: User;
   public unreadMessagesCount: number = null;
   public pendingTasksCount: number = null;
@@ -31,7 +35,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     {
       text: 'Logout', path: '', icon: 'exit_to_app', action: () => {
         this.authService.logout(() => {
-          this.notifications.pushNotification('Logged out');
+          this.notifications.alert('Logged out');
         });
       }
     },
@@ -44,25 +48,38 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private worktimeRequestService: WorktimeRequestService,
               private authService: AuthenticationService,
               private notifications: NotificationsService,
-              private notificationsWebSocketService: NotificationsWebsocketService) {
+              private notificationsWebSocketService: NotificationsWebsocketService,
+              private datePipe: DatePipe) {
   }
 
   ngOnDestroy(): void {
-    this.webSocketSubject.unsubscribe();
+    this.webSocketSubjectWrapper.unsubscribe();
   }
 
   ngOnInit() {
-    this.webSocketSubject.subscribe(event => {
-      console.log(event);
+    this.webSocketSubjectWrapper.subscribe(event => {
       const source = event['source'];
-      if (source['className'] === 'WorktimeRequest' || source['className'] === 'TimeRequest') {
-        this.timeRequestsCount = null;
-        this.loadTimeRequestsCount();
-      }
-      if (source['className'] === 'UserDocument') {
-        if (source['type'] === 'UPDATE') {
-          this.user = ReflectionUtils.getInstanceFromRawObject(source['obj'], User);
-        }
+      switch (source['className']) {
+        case 'UserDocument':
+          if (source['type'] === 'UPDATE') {
+            this.user = ReflectionUtils.getInstanceFromRawObject(source['obj'], User);
+          }
+          break;
+        case 'TimeRequest':
+        case 'WorktimeRequest':
+          const type = source['type'];
+          if (type === 'APPROVE' || type === 'DECLINE') {
+            const action = type === 'APPROVE' ? 'approved' : 'declined';
+            this.userService.getUserById(source['obj']['approverId']).subscribe(user => {
+              this.notifications.notification('Request approved',
+                `${user.realName ? user.realName : user.username} has ${action} your request: 
+                ${this.stringifyRequest(source['obj'], source['className'])}`,
+                type === 'APPROVE' ? NotificationType.Info : NotificationType.Warn);
+            });
+          }
+          this.timeRequestsCount = null;
+          this.loadTimeRequestsCount();
+          break;
       }
     });
     this.fetchUser();
@@ -73,6 +90,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.unsetAll();
       }
     });
+  }
+
+  private stringifyRequest(rawRequest: WorktimeRequest | TimeRequest, type: string) {
+    debugger;
+    if (type === 'WorktimeRequest') {
+      return `Worktime from ${this.datePipe.transform(rawRequest.startDate)} to ${this.datePipe.transform(rawRequest.endDate)}, 
+      ${rawRequest['hours']} hours per day`;
+    } else if (type === 'TimeRequest') {
+      return `${rawRequest['type']} from ${this.datePipe.transform(rawRequest.startDate)} to ${this.datePipe.transform(rawRequest.endDate)}`;
+    } else {
+      return '';
+    }
   }
 
   toggleSidenav() {

@@ -23,6 +23,8 @@ import {AdminModule} from './admin/admin.module';
 import {TimelineComponent} from './timeline/timeline.component';
 import {HelpComponent} from './help/help.component';
 import {TasksComponent} from './tasks/tasks.component';
+import {SimpleNotificationsModule} from 'angular2-notifications';
+import {DatePipe} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -51,11 +53,11 @@ import {TasksComponent} from './tasks/tasks.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AdminModule
+    AdminModule,
+    SimpleNotificationsModule.forRoot()
   ],
-  providers: [],
-  exports: [
-  ],
+  providers: [DatePipe],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

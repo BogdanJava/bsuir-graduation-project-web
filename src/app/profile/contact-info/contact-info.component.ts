@@ -45,7 +45,7 @@ export class ContactInfoComponent implements OnInit {
         user.birthday = new Date(user.birthday);
         this.source = ReflectionUtils.getObjectCopy(user);
         this.user = ReflectionUtils.getObjectCopy(user);
-        this.notifications.pushNotification("User info updated");
+        this.notifications.alert("User info updated");
       });
   }
 }

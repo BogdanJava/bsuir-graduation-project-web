@@ -1,5 +1,11 @@
 <mat-card class="filter-card">
-  <h2 class="mat-h2 admin-console-header">Approve time & worktime requests</h2>
+  <div class="title">
+    <span class="mat-h2 admin-console-header">Approve time & worktime requests</span>
+    <button mat-icon-button [ngClass]="{'button-spin': timeRequestsLoading || worktimeRequestsLoading}"
+            (click)="load()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
   <mat-divider></mat-divider>
 
   <mat-expansion-panel style="margin-top: 30px" #filterPanel>

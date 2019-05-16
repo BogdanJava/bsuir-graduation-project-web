@@ -41,7 +41,7 @@ export class PasswordComponent implements OnInit {
     let newPassword = this.secondFormGroup.controls['newPassword'].value;
     this.authService.updatePassword(oldPassword, newPassword).subscribe(result => {
       if (result) {
-        this.notifications.pushNotification('Password has been updated');
+        this.notifications.alert('Password has been updated');
         stepper.reset();
       }
     });

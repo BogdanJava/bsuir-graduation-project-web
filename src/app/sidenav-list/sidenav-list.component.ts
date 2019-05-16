@@ -20,7 +20,7 @@ export class SidenavListComponent implements OnInit {
     new TabItem('Help', 'help', 'help'),
     new TabItem('Logout', 'exit_to_app', 'login', () => {
       this.authenticationService.logout();
-      this.notifications.pushNotification('Logged out');
+      this.notifications.alert('Logged out');
     })
   ];
   public tabList: TabItem[];

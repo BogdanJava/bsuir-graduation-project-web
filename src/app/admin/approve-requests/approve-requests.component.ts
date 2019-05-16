@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {RequestStatus, TimeRequest} from '../../model/TimeRequest';
 import {WorktimeRequest} from '../../model/WorktimeRequest';
 import {TimeRequestService} from '../../time-request.service';
@@ -102,14 +102,27 @@ export class ApproveRequestsComponent implements OnInit {
   }
 
   processWorktimeRequest(requestId: string, approved: boolean) {
-    this.worktimeRequestService.approveRequest(requestId, approved).subscribe(_ => {
-      this.notifications.pushNotification('Request has been approved');
+    this.worktimeRequestService.approveRequest(requestId, approved).subscribe(result => {
+      this.notifications.alert(`Request has been ${ApproveRequestsComponent.statusString(result.status)}`);
+      this.load();
     });
   }
 
+  private static statusString(status: RequestStatus) {
+    switch (status) {
+      case RequestStatus.Approved:
+        return 'approved';
+      case RequestStatus.Declined:
+        return 'declined';
+      default:
+        throw new Error('Incorrect status');
+    }
+  }
+
   processTimeRequest(requestId: string, approved: boolean) {
-    this.timeRequestService.approveRequest(requestId, approved).subscribe(_ => {
-      this.notifications.pushNotification('Request has been approved');
+    this.timeRequestService.approveRequest(requestId, approved).subscribe(result => {
+      this.notifications.alert(`Request has been ${ApproveRequestsComponent.statusString(result.status)}`);
+      this.load();
     });
   }
 

@@ -55,7 +55,7 @@ export class CreateUserComponent implements OnInit {
     if (!CreateUserComponent.hasErrors(createUserForm)) {
       this.fillUser();
       this.userService.createUser(this.user).subscribe(user => {
-        this.notifications.pushNotification('User has been created');
+        this.notifications.alert('User has been created');
       });
     }
   }
