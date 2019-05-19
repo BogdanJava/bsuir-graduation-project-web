@@ -21,7 +21,6 @@ import {DatePipe,} from '@angular/common';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  private webSocketSubjectWrapper = this.notificationsWebSocketService.getSubjectWrapper();
   public user: User;
   public unreadMessagesCount: number = null;
   public pendingTasksCount: number = null;
@@ -40,6 +39,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     },
   ];
+  private webSocketSubjectWrapper = this.notificationsWebSocketService.getSubjectWrapper();
   @Output()
   private clickMenuButtonEventEmitter = new EventEmitter();
 
@@ -57,31 +57,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.webSocketSubjectWrapper.subscribe(event => {
-      const source = event['source'];
-      switch (source['className']) {
-        case 'UserDocument':
-          if (source['type'] === 'UPDATE') {
-            this.user = ReflectionUtils.getInstanceFromRawObject(source['obj'], User);
-          }
-          break;
-        case 'TimeRequest':
-        case 'WorktimeRequest':
-          const type = source['type'];
-          if (type === 'APPROVE' || type === 'DECLINE') {
-            const action = type === 'APPROVE' ? 'approved' : 'declined';
-            this.userService.getUserById(source['obj']['approverId']).subscribe(user => {
-              this.notifications.notification('Request approved',
-                `${user.realName ? user.realName : user.username} has ${action} your request: 
-                ${this.stringifyRequest(source['obj'], source['className'])}`,
-                type === 'APPROVE' ? NotificationType.Info : NotificationType.Warn);
-            });
-          }
-          this.timeRequestsCount = null;
-          this.loadTimeRequestsCount();
-          break;
-      }
-    });
+    this.connectToWebSocket();
     this.fetchUser();
     this.authService.userState.subscribe(user => {
       if (user) {
@@ -92,8 +68,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
+  toggleSidenav() {
+    this.clickMenuButtonEventEmitter.emit();
+  }
+
   private stringifyRequest(rawRequest: WorktimeRequest | TimeRequest, type: string) {
-    debugger;
     if (type === 'WorktimeRequest') {
       return `Worktime from ${this.datePipe.transform(rawRequest.startDate)} to ${this.datePipe.transform(rawRequest.endDate)}, 
       ${rawRequest['hours']} hours per day`;
@@ -102,10 +81,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     } else {
       return '';
     }
-  }
-
-  toggleSidenav() {
-    this.clickMenuButtonEventEmitter.emit();
   }
 
   private fetchUser(): void {
@@ -141,6 +116,34 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.timeRequestsCount = result;
       } else {
         this.timeRequestsCount += result;
+      }
+    });
+  }
+
+  private connectToWebSocket() {
+    this.webSocketSubjectWrapper.subscribe(event => {
+      const source = event['source'];
+      switch (source['className']) {
+        case 'UserDocument':
+          if (source['type'] === 'UPDATE') {
+            this.user = ReflectionUtils.getInstanceFromRawObject(source['obj'], User);
+          }
+          break;
+        case 'TimeRequest':
+        case 'WorktimeRequest':
+          const type = source['type'];
+          if (type === 'APPROVE' || type === 'DECLINE') {
+            const action = type === 'APPROVE' ? 'approved' : 'declined';
+            this.userService.getUserById(source['obj']['approverId']).subscribe(user => {
+              this.notifications.notification('Request approved',
+                `${user.realName ? user.realName : user.username} has ${action} your request: 
+                ${this.stringifyRequest(source['obj'], source['className'])}`,
+                type === 'APPROVE' ? NotificationType.Info : NotificationType.Warn);
+            });
+          }
+          this.timeRequestsCount = null;
+          this.loadTimeRequestsCount();
+          break;
       }
     });
   }

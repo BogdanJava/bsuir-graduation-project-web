@@ -5,25 +5,9 @@ import {UserService} from './user.service';
 import {AuthenticationService} from './authentication/authentication.service';
 
 abstract class AbstractWebsocketService {
+  urlQuery: string;
 
-  private getMapping(): string {
-    return `${WEB_SOCKET_URL}${this.endpointMapping()}`;
-  }
-
-  protected abstract endpointMapping(): string;
-
-  getSubjectWrapper(...params: Pair[]): WebSocketSubjectWrapper {
-    if (!params) {
-      params = [];
-    }
-    params.push(
-      {key: 'userId', value: UserService.getCurrentUserId()},
-      {key: 'accessToken', value: AuthenticationService.getToken()});
-    const webSocketSubject = webSocket(AbstractWebsocketService.addParams(this.getMapping(), params));
-    return new WebSocketSubjectWrapper(webSocketSubject);
-  }
-
-  private static addParams(mapping: string, params: Pair[]): string {
+  static addParams(mapping: string, params: Pair[]): string {
     let builder = ''.concat(mapping);
     for (let i = 0; i < params.length; i++) {
       if (i == 0) {
@@ -35,6 +19,18 @@ abstract class AbstractWebsocketService {
     return builder;
   }
 
+  getSubjectWrapper(): WebSocketSubjectWrapper {
+    this.urlQuery = AbstractWebsocketService.addParams(this.getMapping(), getConnectParams());
+    const webSocketSubject = webSocket(this.urlQuery);
+    return new WebSocketSubjectWrapper(webSocketSubject, this.getMapping());
+  }
+
+  protected abstract endpointMapping(): string;
+
+  private getMapping(): string {
+    return `${WEB_SOCKET_URL}${this.endpointMapping()}`;
+  }
+
 }
 
 export class WebSocketSubjectWrapper {
@@ -42,15 +38,20 @@ export class WebSocketSubjectWrapper {
   private reconnectTriesCount = 0;
 
   constructor(private subject: WebSocketSubject<{}>,
+              private mapping: string,
               private reconnectInterval: number = 5000,
-              private reconnectMaxTries: number = 10) {
+              private reconnectMaxTries: number = 1000) {
   }
 
 
   subscribe(onResult: (msg) => void, onError?: (error) => void) {
     if (!onError) {
       onError = error => {
-        console.log('my error: ', error);
+        console.log(error);
+        this.connected = false;
+        setTimeout(() => {
+          this.doSubscribe(onResult, onError);
+        }, this.reconnectInterval);
       };
     }
     return this.subject.subscribe((msg) => {
@@ -69,6 +70,8 @@ export class WebSocketSubjectWrapper {
   }
 
   private doSubscribe(onResult: (msg) => void, onError: (error) => void) {
+    const queryString = AbstractWebsocketService.addParams(this.mapping, getConnectParams());
+    this.subject = webSocket(queryString);
     this.subject.subscribe(onResult, onError, () => {
       if (this.reconnectTriesCount < this.reconnectMaxTries) {
         console.log(`Reconnecting... Tries remain: ${this.reconnectMaxTries - ++this.reconnectTriesCount}`);
@@ -93,3 +96,8 @@ class Pair {
   value: string;
 }
 
+function getConnectParams() {
+  return [
+    {key: 'userId', value: UserService.getCurrentUserId()},
+    {key: 'accessToken', value: AuthenticationService.getToken()}];
+}
