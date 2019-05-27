@@ -1,0 +1,80 @@
+@mixin footer-mixin($theme) {
+  $primary: map_get($theme, primary);
+  $accent: map_get($theme, accent);
+  $background: map-get($theme, background);
+
+  footer {
+    margin-top: 200px;
+    width: 100%;
+    color: mat-color($background, background);
+  }
+
+  .footer-copyright {
+    background: mat-color($primary);
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+  }
+
+  .footer-copyright span {
+    color: mat-color($background, background);
+    opacity: 0.54;
+  }
+
+  .page-footer {
+    background: mat-color($primary, lighter);
+  }
+
+  footer a {
+    cursor: pointer;
+    text-decoration: none;
+    color: mat-color($background, background) !important;
+  }
+}
+
+.row ul {
+  padding-left: 0;
+}
+
+.list-unstyled {
+  list-style: none;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.container-fluid {
+  padding: 20px 40px;
+  width: auto;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.row > * {
+  text-align: left;
+  max-width: 50%;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.flex-basis-25 {
+  flex: 0 0 25%;
+}
+
+.flex-basis-50 {
+  flex: 0 0 50%;
+}
+
+.flex-basis-40 {
+  flex: 0 0 40%;
+}

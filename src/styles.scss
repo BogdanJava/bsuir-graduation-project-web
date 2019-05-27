@@ -21,6 +21,8 @@ $app-dark-theme: mat-light-theme($dark-primary, $dark-accent, $dark-warn);
 @import "~src/app/profile/security/password/password.component";
 @import "~src/app/admin/admin-console/admin-console.component";
 @import "~src/app/admin/approve-requests/approve-requests.component";
+@import "~src/app/footer/footer.component";
+@import "~src/app/home/home.component";
 @import "~saturn-datepicker/theming";
 
 @include sat-datepicker-theme($app-dark-theme);
@@ -28,6 +30,8 @@ $app-dark-theme: mat-light-theme($dark-primary, $dark-accent, $dark-warn);
 @include danger-message-mixin($app-dark-theme);
 @include admin-console-colors($app-dark-theme);
 @include approve-requests-elements($app-dark-theme);
+@include footer-mixin($app-dark-theme);
+@include home-mixin($app-dark-theme);
 
 // defaults
 
@@ -80,4 +84,67 @@ $app-dark-theme: mat-light-theme($dark-primary, $dark-accent, $dark-warn);
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+}
+
+.loading-spinner {
+  margin: 50px auto 0;
+}
+
+.filter-expansion-panel {
+  margin-top: 15px;
+}
+
+.button-spin {
+  -webkit-animation-name: spin;
+  -webkit-animation-duration: 4000ms;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+
+  -moz-animation-name: spin;
+  -moz-animation-duration: 4000ms;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: linear;
+
+  -ms-animation-name: spin;
+  -ms-animation-duration: 4000ms;
+  -ms-animation-iteration-count: infinite;
+  -ms-animation-timing-function: linear;
+
+  animation-name: spin;
+  animation-duration: 4000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+
+  @-ms-keyframes spin {
+    from {
+      -ms-transform: rotate(0deg);
+    }
+    to {
+      -ms-transform: rotate(360deg);
+    }
+  }
+  @-moz-keyframes spin {
+    from {
+      -moz-transform: rotate(0deg);
+    }
+    to {
+      -moz-transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes spin {
+    from {
+      -webkit-transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 }

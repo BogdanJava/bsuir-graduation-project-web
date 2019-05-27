@@ -1,3 +1,52 @@
-<p>
-  tasks works!
-</p>
+<mat-card class="filter-card">
+  <div class="title">
+    <span class="mat-h2 ">Tasks</span>
+    <button mat-icon-button [ngClass]="{'button-spin': tasksLoading}"
+            (click)="load()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+  <mat-divider></mat-divider>
+
+  <mat-expansion-panel style="margin-top: 15px" #filterPanel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Filter
+      </mat-panel-title>
+      <mat-panel-description>
+        Specify date, search terms or other parameters
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-form-field>
+      <mat-label>Assigned person</mat-label>
+      <input matInput [ngModel]="personName">
+    </mat-form-field>
+
+    <div class="button-container">
+      <button type="button" mat-flat-button color="primary" (click)="applyFilter(filterPanel)">
+        Apply
+      </button>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-chip-list class="filter-entries">
+    <mat-chip *ngFor="let entry of filter.getFilterList()" [removable]="entry.field != 'approverId'"
+              (removed)="removeFilterEntry(entry)">
+      {{displayEntry(entry)}}
+      <mat-icon matChipRemove *ngIf="entry.field != 'approverId'">cancel</mat-icon>
+    </mat-chip>
+  </mat-chip-list>
+
+</mat-card>
+
+<div class="tasks-management-block">
+  <section class="tasks-time-list">
+    time blocks
+  </section>
+  <section class="tasks-list">
+    tasks list
+  </section>
+  <section class="task-details">
+    task details
+  </section>
+</div>

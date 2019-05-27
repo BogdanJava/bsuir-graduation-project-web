@@ -24,7 +24,10 @@ export class DataFilter {
   toQueryObject(): object {
     const filter = {};
     this.filterList.forEach(entry => {
-      filter[entry.field] = {operator: entry.operator.toString(), value: entry.value};
+      filter[entry.field] = {operator: entry.operator.toString(), value: entry.value, type: entry.type ? entry.type : 'ANY'};
+      if (entry.not) {
+        filter[entry.field]['not'] = entry.not;
+      }
     });
     return filter;
   }
@@ -40,38 +43,36 @@ export class DataFilter {
 export class FilterEntry {
   constructor(public field: string,
               public operator: Operator,
-              public value: any) {
+              public value: any,
+              public not: boolean = false,
+              public type?: string) {
   }
 
 }
 
 export enum Operator {
-  EQ = 'EQ', IN = 'IN', GT = 'GT', LT = 'LT', GTE = 'GTE', LTE = 'LTE'
+  EQ = 'EQ', IN = 'IN', GT = 'GT', LT = 'LT', GTE = 'GTE', LTE = 'LTE', AND = 'AND', OR = 'OR'
 }
 
 export function operatorName(operator: Operator) {
-  let stringValue;
   switch (operator) {
     case Operator.EQ:
-      stringValue = 'equals';
-      break;
+      return 'equals';
     case Operator.IN:
-      stringValue = 'in';
-      break;
+      return 'in';
     case Operator.GT:
-      stringValue = 'greater than';
-      break;
+      return 'greater than';
     case Operator.LT:
-      stringValue = 'less than';
-      break;
+      return 'less than';
     case Operator.GTE:
-      stringValue = 'greater than or equals';
-      break;
+      return 'greater than or equals';
     case Operator.LTE:
-      stringValue = 'less than or equals';
-      break;
+      return 'less than or equals';
+    case Operator.AND:
+      return 'and';
+    case Operator.OR:
+      return 'or';
     default:
-      stringValue = '';
+      return '';
   }
-  return stringValue;
 }

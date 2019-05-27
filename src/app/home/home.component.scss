@@ -1,0 +1,53 @@
+@mixin home-mixin($theme) {
+  $primary: map_get($theme, primary);
+  $background: map_get($theme, background);
+
+  .content-row {
+    color: mat-color($background, background);
+    margin: 0;
+  }
+}
+
+.home-cards-container {
+  margin: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1 0 29%; /* explanation below */
+  min-width: 300px;
+  max-width: 33%;
+  margin: 10px;
+  height: 200px;
+  padding: 0;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2),
+  0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+  0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}
+
+.card {
+  height: 250px !important;
+}
+
+mat-card-title {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.mat-card-header > * {
+  width: 100%;
+}
+
+.bg-image {
+  background-image: url("/assets/img/Image_017-01.png");
+  height: 100%;
+  width: 100%;
+  display: table;
+}
+
+.content {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}

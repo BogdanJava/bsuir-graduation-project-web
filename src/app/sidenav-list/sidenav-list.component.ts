@@ -17,6 +17,7 @@ export class SidenavListComponent implements OnInit {
     new TabItem('Timeline', 'timeline', 'timeline'),
     new TabItem('Calendar', 'event_note', 'calendar'),
     new TabItem('Tasks', 'assignment', 'tasks'),
+    new TabItem('Messenger', 'message', 'messenger'),
     new TabItem('Help', 'help', 'help'),
     new TabItem('Logout', 'exit_to_app', 'login', () => {
       this.authenticationService.logout();

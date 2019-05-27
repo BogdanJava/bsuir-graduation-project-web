@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {MatSidenav} from '@angular/material';
 
 @Component({
@@ -7,8 +7,10 @@ import {MatSidenav} from '@angular/material';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
   toggleSidenav(sidenav: MatSidenav) {
     sidenav.toggle();
     document.getElementById('sidenavList').focus();
   }
+
 }

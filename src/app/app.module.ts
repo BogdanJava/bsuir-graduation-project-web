@@ -25,6 +25,10 @@ import {HelpComponent} from './help/help.component';
 import {TasksComponent} from './tasks/tasks.component';
 import {SimpleNotificationsModule} from 'angular2-notifications';
 import {DatePipe} from '@angular/common';
+import {FooterComponent} from './footer/footer.component';
+import {ChartsModule} from 'ng2-charts';
+import {MessengerComponent} from './messenger/messenger.component';
+import {PersonsAutocompleteComponent} from './admin/projects/create-project/persons-autocomplete/persons-autocomplete.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +47,8 @@ import {DatePipe} from '@angular/common';
     TimelineComponent,
     HelpComponent,
     TasksComponent,
+    FooterComponent,
+    MessengerComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +60,7 @@ import {DatePipe} from '@angular/common';
     FormsModule,
     ReactiveFormsModule,
     AdminModule,
+    ChartsModule,
     SimpleNotificationsModule.forRoot()
   ],
   providers: [DatePipe],

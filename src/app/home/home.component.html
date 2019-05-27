@@ -1,3 +1,28 @@
 <div class="home-cards-container">
-
+  <div class="card">
+    <div class="bg-image">
+      <div class="content">
+        <div class="mat-h1 content-row">{{currentDate.date | date: 'h:mm:ss a'}}</div>
+        <div class="mat-body content-row">{{currentDate.date | date: 'EEEE, MMMM d' }}</div>
+      </div>
+    </div>
+  </div>
+  <mat-card class="card" [ngStyle]="{display: processedRequestsChart != null ? 'block' : 'hidden'}">
+    <mat-card-header>
+      <mat-card-title class="text-center">Requests processed last month</mat-card-title>
+    </mat-card-header>
+    <mat-divider inset="true"></mat-divider>
+    <mat-card-content>
+      <canvas width="200" height="100" #processedRequestsCanvas></canvas>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="card" [ngStyle]="{display: timeRequestTypesChart != null ? 'block' : 'hidden'}">
+    <mat-card-header>
+      <mat-card-title class="text-center">Active time requests</mat-card-title>
+    </mat-card-header>
+    <mat-divider inset="true"></mat-divider>
+    <mat-card-content>
+      <canvas width="200" height="100" #timeRequestTypesCanvas></canvas>
+    </mat-card-content>
+  </mat-card>
 </div>

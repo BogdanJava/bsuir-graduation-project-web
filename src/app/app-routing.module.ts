@@ -19,13 +19,17 @@ import {TimelineComponent} from './timeline/timeline.component';
 import {AdminConsoleComponent} from './admin/admin-console/admin-console.component';
 import {HelpComponent} from './help/help.component';
 import {TasksComponent} from './tasks/tasks.component';
+import {MessengerComponent} from './messenger/messenger.component';
 
 const routes: Routes = [
   {redirectTo: '/login', pathMatch: 'full', path: ''},
   {path: 'login', component: AuthenticationComponent, canActivate: [AuthorizedGuard]},
-  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
+  {
+    path: 'home', component: HomeComponent, canActivate: [AuthGuard], canActivateChild: [AuthGuard]
+  },
   {path: 'help', component: HelpComponent},
   {path: 'timeline', component: TimelineComponent, canActivate: [AuthGuard]},
+  {path: 'messenger', component: MessengerComponent, canActivate: [AuthGuard]},
   {path: 'tasks', component: TasksComponent, canActivate: [AuthGuard]},
   {
     path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], canActivateChild: [AuthGuard], children: [

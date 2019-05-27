@@ -56,9 +56,9 @@ export enum RequestStatus {
 }
 
 export enum RequestType {
-  BUSINESS_LEAVE,
-  VACATION,
-  UNPAID,
-  TIME_SHIFT,
-  ILLNESS
+  BUSINESS_LEAVE = 'BUSINESS_LEAVE',
+  VACATION = 'VACATION',
+  UNPAID = 'UNPAID',
+  TIME_SHIFT = 'TIME_SHIFT',
+  ILLNESS = 'ILLNESS',
 }
