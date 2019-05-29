@@ -2,6 +2,32 @@
   display: flex;
   margin: 20px 20px;
   width: inherit;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: wrap;
+}
+
+.tasks-management-block section {
+}
+
+mat-card-title {
+  margin: 0 !important;
+}
+
+.tasks-categories-list a {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.tasks-time-list .mat-h3 {
+  padding-top: 10px;
+  margin: 10px;
+}
+
+.tasks-time-list mat-card {
+  padding: 0 !important;
+}
+
+.tasks-time-list {
+  flex: 1 0 17%;
+  max-width: 17%;
+  min-width: 200px
 }

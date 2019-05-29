@@ -41,7 +41,32 @@
 
 <div class="tasks-management-block">
   <section class="tasks-time-list">
-    time blocks
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <h3 class="mat-h3">Time blocks</h3>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-nav-list class="tasks-categories-list">
+          <a mat-list-item>
+            <span class="mat-body">All</span>
+          </a>
+          <a mat-list-item>
+            <span class="mat-body">Today</span>
+          </a>
+          <a mat-list-item>
+            <span class="mat-body">Week</span>
+          </a>
+          <a mat-list-item>
+            <span class="mat-body">Overdue</span>
+          </a>
+          <a mat-list-item>
+            <span class="mat-body">No date</span>
+          </a>
+        </mat-nav-list>
+      </mat-card-content>
+    </mat-card>
   </section>
   <section class="tasks-list">
     tasks list

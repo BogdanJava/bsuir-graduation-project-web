@@ -13,7 +13,7 @@
     </mat-card-header>
     <mat-divider inset="true"></mat-divider>
     <mat-card-content>
-      <canvas width="200" height="100" #processedRequestsCanvas></canvas>
+      <canvas class="canvasChart" #processedRequestsCanvas></canvas>
     </mat-card-content>
   </mat-card>
   <mat-card class="card" [ngStyle]="{display: timeRequestTypesChart != null ? 'block' : 'hidden'}">
@@ -22,7 +22,7 @@
     </mat-card-header>
     <mat-divider inset="true"></mat-divider>
     <mat-card-content>
-      <canvas width="200" height="100" #timeRequestTypesCanvas></canvas>
+      <canvas class="canvasChart" #timeRequestTypesCanvas></canvas>
     </mat-card-content>
   </mat-card>
 </div>
