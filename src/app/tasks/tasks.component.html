@@ -44,7 +44,7 @@
     <mat-card>
       <mat-card-header>
         <mat-card-title>
-          <h3 class="mat-h3">Time blocks</h3>
+          <h3 class="mat-h3">My tasks</h3>
         </mat-card-title>
       </mat-card-header>
       <mat-card-content>
@@ -69,9 +69,44 @@
     </mat-card>
   </section>
   <section class="tasks-list">
-    tasks list
-  </section>
-  <section class="task-details">
-    task details
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <button class="add-new-task-button" mat-button (click)="openCreateTaskModal()">
+            <mat-icon>add_circle_outline</mat-icon>
+            <span class="mat-body" style="margin-left: 2px;">Add task</span>
+          </button>
+          <button style="float: right;" mat-button [mat-menu-trigger-for]="viewModesMenu" #menuButton>
+            <span class="view-options">
+              <span>View by: {{selectedViewMode['text']}}</span>
+              <mat-icon>expand_more</mat-icon>
+            </span>
+          </button>
+          <mat-menu #viewModesMenu="matMenu">
+            <span *ngFor="let viewMode of viewModes" mat-menu-item class="mat-body-strong menu-tab-item-text"
+                  [innerText]="viewMode['text']" (click)="setViewMode(viewMode)"></span>
+          </mat-menu>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-divider inset="true"></mat-divider>
+      <mat-card-content>
+        <mat-nav-list class="tasks-categories-list">
+          <div class="task-item" *ngFor="let task of tasks">
+            <button mat-icon-button class="done-button">
+              <mat-icon>done</mat-icon>
+            </button>
+            <span class="task-name mat-body" [innerText]="task.name"></span>
+            <div class="assigned-persons-avatars-container">
+              <img class="person-avatar" *ngIf="task.assignPerson"
+                   [src]="task.assignPerson.photoUrl" [alt]="task.assignPerson.realName"
+                   [title]="task.assignPerson.realName">
+            </div>
+          </div>
+        </mat-nav-list>
+        <section id="emptyLabel" *ngIf="noDataFound()">
+          <p class="mat-body-1 empty-label">No tasks found</p>
+        </section>
+      </mat-card-content>
+    </mat-card>
   </section>
 </div>

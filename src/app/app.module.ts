@@ -22,7 +22,7 @@ import {OtherRequestsComponent} from './calendar/other-requests/other-requests.c
 import {AdminModule} from './admin/admin.module';
 import {TimelineComponent} from './timeline/timeline.component';
 import {HelpComponent} from './help/help.component';
-import {TasksComponent} from './tasks/tasks.component';
+import {CreateTaskModal, TasksComponent} from './tasks/tasks.component';
 import {SimpleNotificationsModule} from 'angular2-notifications';
 import {DatePipe} from '@angular/common';
 import {FooterComponent} from './footer/footer.component';
@@ -47,6 +47,7 @@ import {MessengerComponent} from './messenger/messenger.component';
     TasksComponent,
     FooterComponent,
     MessengerComponent,
+    CreateTaskModal
   ],
   imports: [
     BrowserModule,
@@ -62,7 +63,8 @@ import {MessengerComponent} from './messenger/messenger.component';
   ],
   providers: [DatePipe],
   exports: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CreateTaskModal]
 })
 export class AppModule {
 }

@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
   MatAutocompleteModule,
@@ -6,14 +6,15 @@ import {
   MatButtonModule,
   MatCardModule,
   MatChipsModule,
-  MatDatepickerModule,
+  MatDatepickerModule, MatDialogModule,
   MatExpansionModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
   MatMenuModule,
-  MatNativeDateModule, MatPaginatorModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
   MatProgressSpinnerModule,
   MatSelectModule,
   MatSidenavModule,
@@ -23,6 +24,7 @@ import {
   MatToolbarModule
 } from '@angular/material';
 import {SatDatepickerModule, SatNativeDateModule} from 'saturn-datepicker';
+import {GlobalExceptionHandlingService} from './global-exception-handling.service';
 
 @NgModule({
   declarations: [],
@@ -50,7 +52,8 @@ import {SatDatepickerModule, SatNativeDateModule} from 'saturn-datepicker';
     MatMenuModule,
     MatChipsModule,
     MatPaginatorModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatDialogModule
   ],
   exports: [
     MatSidenavModule,
@@ -75,8 +78,10 @@ import {SatDatepickerModule, SatNativeDateModule} from 'saturn-datepicker';
     MatMenuModule,
     MatChipsModule,
     MatPaginatorModule,
-    MatAutocompleteModule
-  ]
+    MatAutocompleteModule,
+    MatDialogModule
+  ],
+  providers: [{provide: GlobalExceptionHandlingService, useClass: ErrorHandler}]
 })
 export class MaterialModule {
 }

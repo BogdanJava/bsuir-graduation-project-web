@@ -15,7 +15,7 @@ export class ProjectsTableComponent implements OnInit {
   tableParams: MatTableParams = new MatTableParams();
   projects: Project[];
   userIdToUserMap: Map<string, Project>;
-  displayedColumns: string[] = ['projectName', 'projectDescription', 'assignedPersons', 'id'];
+  displayedColumns: string[] = ['projectName', 'projectDescription', 'assignedPersonControl', 'id'];
   defaultPhoto = 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Edit_icon_%28the_Noun_Project_30184%29.svg/1024px-Edit_icon_%28the_Noun_Project_30184%29.svg.png';
 
   constructor(private projectService: ProjectService,

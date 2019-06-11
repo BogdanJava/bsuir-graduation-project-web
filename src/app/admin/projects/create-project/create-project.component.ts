@@ -8,6 +8,7 @@ import {UserService} from '../../../user.service';
 import {ReflectionUtils} from '../../../model/ReflectionUtils';
 import {ProjectService} from '../../../project.service';
 import {NotificationsService} from '../../../notifications.service';
+import {projectAlreadyExists} from '../../../functions/validation';
 
 @Component({
   selector: 'app-create-project',
@@ -31,7 +32,7 @@ export class CreateProjectComponent implements OnInit {
               private projectService: ProjectService,
               private notifications: NotificationsService) {
     this.createProjectForm = formBuilder.group({
-      projectName: ['', Validators.required, this.projectAlreadyExists()],
+      projectName: ['', Validators.required, projectAlreadyExists(projectService)],
       projectDescription: [''],
       projectPhotoUrl: ['']
     });
